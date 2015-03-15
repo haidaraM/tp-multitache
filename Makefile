@@ -28,8 +28,7 @@ CPPFLAGS	= $(DEFINE) -Wall -ansi -ggdb -std=c++11
 EDLFLAGS	= -L./lib $(LIBS)
 
 #Fichiers
-INTERFACES_FILES		= 
-							
+INTERFACES_FILES		= 						
 INT 		            = $(addprefix $(SRC_DIR)/, $(INTERFACES_FILES))					# construit le chemin des sources
 OBJ			            = $(addprefix $(OBJ_DIR)/, $(INTERFACES_FILES:.h=.o))			# Génération du nom des fichiers obj
 MAIN_OBJ             	= $(OBJ_DIR)/main.o 											# .o du fichier ou se trouve le main
@@ -41,7 +40,7 @@ MESSAGE		= "Compilation réussie"
 
 
 $(EXE_DIR)/$(EXE): $(OBJ) $(MAIN_OBJ)
-	$(LINK) -o $(EXE) $^ $(EDLFLAGS) 
+	$(LINK) -o $(EXE_DIR)/$(EXE) $^ $(EDLFLAGS) 
 	$(ECHO) $(MESSAGE)
 	
 
