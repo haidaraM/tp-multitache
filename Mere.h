@@ -32,6 +32,11 @@
 // Contrat :
 //
 int main (void);
+//la tache pricipale de l'application
+//
+
+void masquage(int noSig);
+//fonction vide masquant la reception des signaux
 
 #endif // XXX_H
 

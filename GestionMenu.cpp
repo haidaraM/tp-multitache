@@ -13,6 +13,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "GestionMenu.h"
+#include "Outils.h"
 #include "Menu.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE

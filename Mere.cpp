@@ -18,6 +18,7 @@
 #include "Heure.h"
 #include "signal.h"
 #include "sys/wait.h"
+#include "GestionMenu.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -44,23 +45,37 @@
 //
 //----- fin de Nom
 int main (void)
-{	
-	pid_t pidC;
+{	//handler de masquage
+	struct sigaction action;
+	action.sa_handler = masquage;
+	sigaction (SIGINT, &action, NULL); // masquage du Ctl+C
+	sigaction (SIGCHLD, &action, NULL);// masquage du signal de mort d'un fils 
+	sigaction (SIGUSR2, &action, NULL);// masquage de SIGUSR2
+	
+	//les pid des taches filles
+	pid_t pidHeure, pidMenu;
+	
 	InitialiserApplication(XTERM);
 	//Création de la tache Heure
+	pidHeure = CreerEtActiverHeure();
 	
-	
-	pidC = CreerEtActiverHeure();
-	
-	
-		
-	sleep(10);
+	//Simulation de la pĥase moteur		
+	//sleep(10);
+	if((pidMenu=fork())==0)
+	{
+		GestionMenu();
+	}
+	else
+	{
+	waitpid(pidMenu, 0, 0);
 	//envoi de sigusr2 à heure : commande de kill
-	kill( pidC , SIGUSR2);
+	kill( pidHeure , SIGUSR2);
 	//waitpid
-	waitpid(pidC, 0, 0);
+	waitpid(pidHeure, 0, 0);
 	TerminerApplication();
 	return 0;
-	
+	}
 	
 }
+
+void masquage(int noSig){}

@@ -22,9 +22,9 @@ CPPFLAGS	= $(DEFINE) -Wall -ansi -ggdb -std=c++11
 EDLFLAGS	= -L/share/public/tp/tp-multitache/ $(LIBS)
 
 #Fichiers
-INTERFACES_FILES		= 						
-INT 		            = $(addprefix $(SRC_DIR)/, $(INTERFACES_FILES))					# construit le chemin des sources
-OBJ			            = $(addprefix $(OBJ_DIR)/, $(INTERFACES_FILES:.h=.o))			# Génération du nom des fichiers obj
+INTERFACES_FILES		= GestionMenu.h					
+INT 		            = $(addprefix $(SRC_DIR), $(INTERFACES_FILES))					# construit le chemin des sources
+OBJ			            = $(addprefix $(OBJ_DIR), $(INTERFACES_FILES:.h=.o))			# Génération du nom des fichiers obj
 MAIN_OBJ             	= Mere.o 											# .o du fichier ou se trouve le main
 
 #Autres commandes et message
@@ -32,6 +32,7 @@ ECHO		= @echo
 RM			= @rm
 MESSAGE		= "Compilation réussie"
 CP			= @cp 
+CHMOD		= @chmod
 
 
 $(EXE_DIR)/$(EXE): $(OBJ) $(MAIN_OBJ)
@@ -53,8 +54,9 @@ clean:
 	$(RM) -fvr *.o $(EXE_DIR)/$(EXE)
 	
 backup: clean
-	$(ECHO) "Sauvegarde dela version actuelle..."
+	$(ECHO) "Sauvegarde de la version actuelle..."
 	$(CP) *.cpp *.h Makefile $(BACKUP_DIR)
-	$(CP) -R TP-Multitache $(BACKUP_DIR)
+	$(CHMOD) 660 $(BACKUP_DIR)/*.*
+	$(CHMOD) 770 $(BACKUP_DIR)/TP-Multitache
 	$(ECHO) "Sauvegarde terminee!"
 	
