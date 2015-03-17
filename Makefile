@@ -1,12 +1,5 @@
 EXE 		= Carrefour
 
-#Directives du préprocesseur pour les #ifdef
-VERBOSE     = VERBOSE
-#VERBOSE    = NO_VERBOSE
-#MAP         = MAP
-MAP        = NO_MAP
-DEFINE      = -D$(VERBOSE) -D$(MAP)
-
 # Compilateur et editeur de lien
 COMP		= @g++
 LINK		= @g++
@@ -31,7 +24,7 @@ EDLFLAGS	= -L./lib $(LIBS)
 INTERFACES_FILES		= 						
 INT 		            = $(addprefix $(SRC_DIR)/, $(INTERFACES_FILES))					# construit le chemin des sources
 OBJ			            = $(addprefix $(OBJ_DIR)/, $(INTERFACES_FILES:.h=.o))			# Génération du nom des fichiers obj
-MAIN_OBJ             	= $(OBJ_DIR)/main.o 											# .o du fichier ou se trouve le main
+MAIN_OBJ             	= $(OBJ_DIR)/Main.o 											# .o du fichier ou se trouve le main
 
 #Autres commandes et message
 ECHO		= @echo
