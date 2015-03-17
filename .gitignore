@@ -27,3 +27,11 @@
 *.out
 *.app
 Carrefour
+
+# fichiers lib de maranzana
+Generateur.h
+Voiture.h
+Menu.h
+Outils.h
+Heure.h
+*#
