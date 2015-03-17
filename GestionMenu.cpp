@@ -44,7 +44,10 @@ void GestionMenu()
 
 void Commande ( char code )
 {
-
+	if(code == 'Q' || code == 'q')
+	{
+		exit(0);
+	}
 }
 
 void Commande ( TypeVoie entree, TypeVoie sortie )
@@ -54,5 +57,5 @@ void Commande ( TypeVoie entree, TypeVoie sortie )
 
 void Commande ( TypeVoie voie, unsigned int duree )
 {
-	
+
 }
