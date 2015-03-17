@@ -9,6 +9,7 @@ SRC_DIR		=
 OBJ_DIR		= 
 LIB_DIR		= 
 EXE_DIR		= TP-Multitache
+BACKUP_DIR	= /share/public/tp/tp-multitache/Compte-Rendu/2015/4/B3425/
 
 
 #Librairies
@@ -30,6 +31,7 @@ MAIN_OBJ             	= Mere.o 											# .o du fichier ou se trouve le main
 ECHO		= @echo
 RM			= @rm
 MESSAGE		= "Compilation réussie"
+CP			= @cp 
 
 
 $(EXE_DIR)/$(EXE): $(OBJ) $(MAIN_OBJ)
@@ -48,5 +50,11 @@ $(EXE_DIR)/$(EXE): $(OBJ) $(MAIN_OBJ)
 
 clean:
 	$(ECHO) "Nettoyage..."
-	$(RM) -fvr $(OBJ_DIR)/*.o $(EXE_DIR)/$(EXE)
+	$(RM) -fvr *.o $(EXE_DIR)/$(EXE)
+	
+backup: clean
+	$(ECHO) "Sauvegarde dela version actuelle..."
+	$(CP) *.cpp *.h Makefile $(BACKUP_DIR)
+	$(CP) -R TP-Multitache $(BACKUP_DIR)
+	$(ECHO) "Sauvegarde terminee!"
 	

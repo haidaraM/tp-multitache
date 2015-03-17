@@ -13,6 +13,8 @@
 
 //------------------------------------------------------ Include personnel
 #include "Mere.h"
+#include "Outils.h"
+#include "unistd.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -40,5 +42,9 @@
 //----- fin de Nom
 int main (void)
 {
+	InitialiserApplication(XTERM);
+	sleep(10);
+	TerminerApplication();
 	return 0;
+	
 }

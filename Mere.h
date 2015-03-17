@@ -2,18 +2,18 @@
                            Mere  -  description
                              -------------------
     début                : 17/03/2015
-    copyright            : (C) Emilien Bai	
+    copyright            : (C) Emilien Bai
     e-mail               : emilien.bai@insa-lyon.fr
 *************************************************************************/
 
 //---------- Interface de la tâche <Mere> (fichier Mere.h) -------
-#if ! defined ( Mere_H )
-#define Mere_H
+#if ! defined ( MERE_H )
+#define MERE_H
 
 //------------------------------------------------------------------------
-// Rôle de la tâche <Mere>
-//Cette tache a pour role de lancer toutes les taches filles et de les 
-//supprimer proprement.
+// Rôle de la tâche <MERE>
+//Crée les sous taches de l'appilication ainsi que les zones de 
+// partagées
 //
 //------------------------------------------------------------------------
 
@@ -31,11 +31,7 @@
 //
 // Contrat :
 //
-
-int main(void);
-//la fonction principale de notre application
-//
-// Contrat: aucun
+int main (void);
 
 #endif // XXX_H
 
