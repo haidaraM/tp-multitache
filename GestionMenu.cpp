@@ -12,6 +12,7 @@
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
+#include <stdlib.h>
 #include "GestionMenu.h"
 #include "Outils.h"
 #include "Menu.h"

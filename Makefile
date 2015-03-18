@@ -19,7 +19,7 @@ INCLUDE		= -I/share/public/tp/tp-multitache/
 
 # Options de compilation et editions de liens
 CPPFLAGS	= $(DEFINE) -Wall -ansi -ggdb -std=c++11
-EDLFLAGS	= -L/share/public/tp/tp-multitache/ $(LIBS)
+EDLFLAGS	= -L/share/public/tp/tp-multitache/
 
 #Fichiers
 INTERFACES_FILES		= GestionMenu.h					
@@ -36,7 +36,7 @@ CHMOD		= @chmod
 
 
 $(EXE_DIR)/$(EXE): $(OBJ) $(MAIN_OBJ)
-	$(LINK) -o $(EXE_DIR)/$(EXE) $^ $(EDLFLAGS) 
+	$(LINK) -o $(EXE_DIR)/$(EXE) $^ $(EDLFLAGS) $(LIBS)
 	$(ECHO) $(MESSAGE)
 	
 

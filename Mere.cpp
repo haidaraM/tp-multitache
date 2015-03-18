@@ -10,14 +10,15 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
-
+#include <sys/wait.h>
+#include <unistd.h>
+#include <signal.h>
 //------------------------------------------------------ Include personnel
 #include "Mere.h"
 #include "Outils.h"
-#include "unistd.h"
 #include "Heure.h"
-#include "signal.h"
-#include "sys/wait.h"
+
+
 #include "GestionMenu.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
@@ -67,13 +68,13 @@ int main (void)
 	}
 	else
 	{
-	waitpid(pidMenu, 0, 0);
-	//envoi de sigusr2 à heure : commande de kill
-	kill( pidHeure , SIGUSR2);
-	//waitpid
-	waitpid(pidHeure, 0, 0);
-	TerminerApplication();
-	return 0;
+		waitpid(pidMenu, 0, 0);
+		//envoi de sigusr2 à heure : commande de kill
+		kill( pidHeure , SIGUSR2);
+		//waitpid
+		waitpid(pidHeure, 0, 0);
+		TerminerApplication();
+		return 0;
 	}
 	
 }
