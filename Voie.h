@@ -31,6 +31,12 @@
 // Contrat :
 //
 
+// void Voie();
+// Mode d'emploi : Gestion des voies
+//
+// Contrat :
+//
+
 void Voie();
 
 

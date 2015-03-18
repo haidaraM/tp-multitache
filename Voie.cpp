@@ -11,10 +11,10 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 #include <vector>
-#include <sys/types.h>
-#include <bits/sigaction.h>
+#include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 
 //------------------------------------------------------ Include personnel
 #include "Voie.h"
@@ -38,20 +38,9 @@ static std::vector<pid_t > les_deplacements;
 //{
 //} //----- fin de nom
 
-//////////////////////////////////////////////////////////////////  PUBLIC
-//---------------------------------------------------- Fonctions publiques
-void Voie ()
-// Algorithme :
-//
-{
-    //TODO : recuperer boite au lettres
-    //TODO : recuperer memoire partagée pour les états des feux
-
-} //----- fin de Void
-
 static void finTache(int numero_signal)
 {
-    for(int i = 0; i<les_deplacements.size(); i++)
+    for(unsigned int i = 0; i<les_deplacements.size(); i++)
     {
         kill(SIGUSR2,les_deplacements[i]);
         waitpid(les_deplacements[i],0,0);
@@ -60,14 +49,15 @@ static void finTache(int numero_signal)
 
 static void finFils(int numero_signal)
 {
-
+    // Synchro de fin avec n'importe quel fils
+    waitpid(-1,0,0);
 }
 
 static void initialisation()
 {
     // TODO : Ignorer les signaux
     // création des handlers
-    sigaction fin_tache, fin_fils;
+    struct sigaction fin_tache, fin_fils;
     fin_tache.sa_flags = 0;
     fin_tache.sa_handler = finTache;
     sigemptyset(&fin_tache.sa_mask);
@@ -80,5 +70,21 @@ static void initialisation()
     sigaction(SIGUSR2,&fin_tache, NULL);
     sigaction(SIGCHLD, &fin_fils, NULL);
 
+    // recuperation pid generateur
+
+
 }
+
+//////////////////////////////////////////////////////////////////  PUBLIC
+//---------------------------------------------------- Fonctions publiques
+void Voie ()
+// Algorithme :
+//
+{
+    //TODO : recuperer boite au lettres
+    //TODO : recuperer memoire partagée pour les états des feux
+    initialisation();
+
+} //----- fin de Void
+
 

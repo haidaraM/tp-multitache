@@ -30,7 +30,7 @@
 //
 // Contrat :
 //
-void GestionMenu();
+void GestionMenu(pid_t generateur);
 
 #endif // GestionMenu_H
 

@@ -11,6 +11,7 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 #include <stdlib.h>
+#include <signal.h>
 
 //------------------------------------------------------ Include personnel
 #include "GestionMenu.h"
@@ -41,13 +42,13 @@ static pid_t pid_generateur;
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-void GestionMenu()
+void GestionMenu(pid_t generateur)
 // Algorithme :
 //
 {
 //TODO : recuperer indentifiant boite aux lettres voitures
 //TODO : recuperer le pid du generateur
-
+    pid_generateur = generateur;
     Menu();
 } //----- fin de Nom
 
@@ -62,10 +63,12 @@ void Commande ( char code )
         Effacer(ETAT_GENERATEUR);
         if(etat_generateur)
         {
+           // kill(pid_generateur, SIGSTOP);
             Afficher(ETAT_GENERATEUR,"OFF",GRAS);
         }
         else
         {
+         // kill(pid_generateur, SIGCONT);
             Afficher(ETAT_GENERATEUR,"ON",GRAS);
         }
         etat_generateur = !etat_generateur;
@@ -76,7 +79,6 @@ void Commande ( TypeVoie entree, TypeVoie sortie )
 {
     //TODO : Mettre la voiture dans la boite aux lettres
     Voiture voiture = {entree, sortie, numero_voiture++};
-
     MsgVoiture msgVoiture = {entree,voiture};
 }
 

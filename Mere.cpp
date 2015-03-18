@@ -64,7 +64,8 @@ int main (void)
 	//sleep(10);
 	if((pidMenu=fork())==0)
 	{
-		GestionMenu();
+		// TODO : me donner le pid du generateur
+		GestionMenu(0);
 	}
 	else
 	{
