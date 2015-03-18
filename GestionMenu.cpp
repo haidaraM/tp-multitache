@@ -10,12 +10,13 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
+#include <stdlib.h>
 
 //------------------------------------------------------ Include personnel
-#include <stdlib.h>
 #include "GestionMenu.h"
 #include "Outils.h"
 #include "Menu.h"
+#include "Voiture.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -24,10 +25,9 @@
 
 //---------------------------------------------------- Variables statiques
 static bool etat_generateur = false;
+static unsigned int numero_voiture = 1;
 static pid_t pid_generateur;
 
-//TODO : recuperer indentifiant boite aux lettres voitures
-//TODO : recuperer le pid du generateur
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
 // Mode d'emploi :
@@ -45,7 +45,10 @@ void GestionMenu()
 // Algorithme :
 //
 {
-	Menu();
+//TODO : recuperer indentifiant boite aux lettres voitures
+//TODO : recuperer le pid du generateur
+
+    Menu();
 } //----- fin de Nom
 
 void Commande ( char code )
@@ -71,7 +74,10 @@ void Commande ( char code )
 
 void Commande ( TypeVoie entree, TypeVoie sortie )
 {
-    //TODO : Gestion de la commande M
+    //TODO : Mettre la voiture dans la boite aux lettres
+    Voiture voiture = {entree, sortie, numero_voiture++};
+
+    MsgVoiture msgVoiture = {entree,voiture};
 }
 
 void Commande ( TypeVoie voie, unsigned int duree )
