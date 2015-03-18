@@ -11,6 +11,8 @@ LINK_DIRECTORIES( /share/public/tp/tp-multitache/)
 set(SOURCE_FILES GestionMenu.cpp
                  GestionMenu.h
                  Mere.cpp
+                 Voie.h
+                 Voie.cpp
                  )
 add_executable(tp_multitache ${SOURCE_FILES})
 

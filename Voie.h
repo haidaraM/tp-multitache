@@ -1,18 +1,18 @@
 /*************************************************************************
-                           GestionMenu  -  description
+                           Voie  -  description
                              -------------------
-    début                : GestionMenu
+    début                : 19/03/2014
     copyright            : (C) 2015 par Mohamed HAIDARA
-    e-mail               : GestionMenu
+    e-mail               : mohamed.haidara@insa-lyon.fr
 *************************************************************************/
 
-//---------- Interface de la tâche <GestionMenu> (fichier GestionMenu.h) -------
-#if ! defined ( GestionMenu_H )
-#define GestionMenu_H
+//---------- Interface de la tâche <Voie> (fichier Voie.h) -------
+#if ! defined ( VOIE_H )
+#define VOIE_H
 
 //------------------------------------------------------------------------
-// Rôle de la tâche <GestionMenu>
-// Cette tache gère le menu et le clavier
+// Rôle de la tâche <Voie>
+//
 //
 //------------------------------------------------------------------------
 
@@ -30,7 +30,8 @@
 //
 // Contrat :
 //
-void GestionMenu();
 
-#endif // GestionMenu_H
+void Voie();
+
+#endif // VOIE_H
 

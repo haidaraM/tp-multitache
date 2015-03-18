@@ -1,21 +1,18 @@
 /*************************************************************************
-                           GestionMenu  -  description
+                           Voie  -  description
                              -------------------
-    début                : GestionMenu
+    début                : 19/03/2015
     copyright            : (C) 2015 par Mohamed HAIDARA
-    e-mail               : GestionMenu
+    e-mail               : mohamed.haidara@insa-lyon.fr
 *************************************************************************/
 
-//---------- Réalisation de la tâche <GestionMenu> (fichier GestionMenu.cpp) ---
+//---------- Réalisation de la tâche <Voie> (fichier Voie.cpp) ---
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
-#include <stdlib.h>
-#include "GestionMenu.h"
-#include "Outils.h"
-#include "Menu.h"
+#include "Voie.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -23,11 +20,7 @@
 //------------------------------------------------------------------ Types
 
 //---------------------------------------------------- Variables statiques
-static bool etat_generateur = false;
-static pid_t pid_generateur;
 
-//TODO : recuperer indentifiant boite aux lettres voitures
-//TODO : recuperer le pid du generateur
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
 // Mode d'emploi :
@@ -41,40 +34,10 @@ static pid_t pid_generateur;
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-void GestionMenu()
+void Voie ()
 // Algorithme :
 //
 {
-	Menu();
-} //----- fin de Nom
+    
+} //----- fin de Void
 
-void Commande ( char code )
-{
-	if(code == 'Q')
-	{
-		exit(0);
-	}
-    else if(code == 'G')
-    {
-        Effacer(ETAT_GENERATEUR);
-        if(etat_generateur)
-        {
-            Afficher(ETAT_GENERATEUR,"OFF",GRAS);
-        }
-        else
-        {
-            Afficher(ETAT_GENERATEUR,"ON",GRAS);
-        }
-        etat_generateur = !etat_generateur;
-    }
-}
-
-void Commande ( TypeVoie entree, TypeVoie sortie )
-{
-    //TODO : Gestion de la commande M
-}
-
-void Commande ( TypeVoie voie, unsigned int duree )
-{
-    //TODO : Gestion de la commande D
-}
