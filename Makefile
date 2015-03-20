@@ -41,7 +41,7 @@ $(EXE_DIR)/$(EXE): $(OBJ) $(MAIN_OBJ)
 	
 
 #Mettre les dependances particulieres ici
-GestionMenu.o : GestionMenu.h Menu.h
+GestionMenu.o : GestionMenu.h 
 
 #Generation des fichiers obj
 %.o:%.cpp
