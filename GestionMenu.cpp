@@ -63,12 +63,12 @@ void Commande ( char code )
         Effacer(ETAT_GENERATEUR);
         if(etat_generateur)
         {
-           // kill(pid_generateur, SIGSTOP);
+            kill(pid_generateur, SIGSTOP);
             Afficher(ETAT_GENERATEUR,"OFF",GRAS);
         }
         else
         {
-         // kill(pid_generateur, SIGCONT);
+            kill(pid_generateur, SIGCONT);
             Afficher(ETAT_GENERATEUR,"ON",GRAS);
         }
         etat_generateur = !etat_generateur;

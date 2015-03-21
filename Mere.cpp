@@ -88,19 +88,20 @@ int main (void)
 	}
 
 	//les pid des taches filles 
-	pid_t pidHeure, pidMenu;
+	pid_t pidHeure, pidMenu, pidGenerateur;
 	
-	
-
 	//Création de la tache Heure
 	pidHeure = CreerEtActiverHeure();
-	
+
+	//Création de la tache Générateur
+	pidGenerateur = CreerEtActiverGenerateur(0, fileVoitures);
+	Afficher(MESSAGE, pidGenerateur);
 	//Simulation de la pĥase moteur		
 	//sleep(10);
 	if((pidMenu=fork())==0)
 	{
 		// TODO : me donner le pid du generateur
-		GestionMenu(-1);
+		GestionMenu(pidGenerateur);
 	}
 	else
 	{
@@ -108,13 +109,15 @@ int main (void)
 		{
 		waitpid(pidMenu, 0, 0);
 		}
-		terminer(pidHeure, fileVoitures);
+		terminer(pidHeure, pidGenerateur, fileVoitures);
 		return 0;
 	}
 	
 }
-void terminer(pid_t pidHeure, int fileVoitures )
+void terminer(pid_t pidHeure, pid_t pidGenerateur, int fileVoitures )
 {
+	kill(pidGenerateur, SIGUSR2);
+	waitpid(pidGenerateur, 0, 0);
 	//envoi de sigusr2 à heure : commande de kill
 	kill( pidHeure , SIGUSR2);
 	//waitpid
