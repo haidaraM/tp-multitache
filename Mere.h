@@ -38,7 +38,7 @@ int main (void);
 void masquage(int noSig);
 //fonction vide masquant la reception des signaux
 
-void terminer(pid_t pidHeure, pid_t pidGenerateur, int idBal, int controleMemoire);
+void terminer(pid_t pidHeure, int fileVoitures);
 //Fonction de terminaison de l'application
 
 
