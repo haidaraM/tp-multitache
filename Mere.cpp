@@ -89,7 +89,7 @@ int main (void)
 	}
 	else
 	{
-		Afficher (MESSAGE, fileVoitures);
+		Afficher (MESSAGE, "Bonjour");
 	}
 
 	//Création du sémaphore de protection de la mémoire partagée
@@ -127,6 +127,7 @@ int main (void)
 }
 void terminer(pid_t pidHeure, pid_t pidGenerateur, int fileVoitures, int semFeux)
 {
+	kill(pidGenerateur, SIGCONT); // On reveille le generateur au cas ou il etait suspendu
 	kill(pidGenerateur, SIGUSR2);
 	waitpid(pidGenerateur, 0, 0);
 	//envoi de sigusr2 à heure : commande de kill
