@@ -50,7 +50,12 @@
 //
 //----- fin de Nom
 int main (void)
-{	//handler de masquage
+{	
+	key_t privatekey = ftok("./TP-Multitache/Carrefour", 'a');
+	//Les id des IPC
+	int fileVoitures, semFeux;
+
+	//handler de masquage
 	struct sigaction action;
 	action.sa_handler = masquage;
 	sigaction (SIGINT, &action, NULL); // masquage du Ctl+C
@@ -59,9 +64,9 @@ int main (void)
 	
 	//Lancement de l'application
 	InitialiserApplication(XTERM);
+
 	//Création de la file de Message
-	key_t privatekey = ftok("./TP-Multitache/Carrefour", 'a');
-	int fileVoitures = msgget(privatekey, 0770|IPC_CREAT);
+	fileVoitures = msgget(privatekey, 0770|IPC_CREAT);
 	if (errno == EACCES)
 	{
 		Afficher(MESSAGE, "Erreur EACCES à la création de la file");
@@ -87,6 +92,12 @@ int main (void)
 		Afficher (MESSAGE, fileVoitures);
 	}
 
+	//Création du sémaphore de protection de la mémoire partagée
+	semFeux = semget(privatekey, 1, IPC_CREAT);
+
+	//Création du fragment de mémoire partagé pour a gestion des Feux
+	
+
 	//les pid des taches filles 
 	pid_t pidHeure, pidMenu, pidGenerateur;
 	
@@ -109,12 +120,12 @@ int main (void)
 		{
 		waitpid(pidMenu, 0, 0);
 		}
-		terminer(pidHeure, pidGenerateur, fileVoitures);
+		terminer(pidHeure, pidGenerateur, fileVoitures, semFeux);
 		return 0;
 	}
 	
 }
-void terminer(pid_t pidHeure, pid_t pidGenerateur, int fileVoitures )
+void terminer(pid_t pidHeure, pid_t pidGenerateur, int fileVoitures, int semFeux)
 {
 	kill(pidGenerateur, SIGUSR2);
 	waitpid(pidGenerateur, 0, 0);
@@ -122,6 +133,8 @@ void terminer(pid_t pidHeure, pid_t pidGenerateur, int fileVoitures )
 	kill( pidHeure , SIGUSR2);
 	//waitpid
 	waitpid(pidHeure, 0, 0);
+	//Destuction du sémaphore pour la mémoire memFeux
+	semctl(semFeux, 0, IPC_RMID, 0);
 	//Destruction de la file de Messages
 	msgctl(fileVoitures, IPC_RMID, 0);
 	TerminerApplication();
