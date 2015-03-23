@@ -17,11 +17,12 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <sys/sem.h>
+#include <errno.h>
 //------------------------------------------------------ Include personnel
 #include "Mere.h"
 #include "Outils.h"
 #include "Heure.h"
-#include "errno.h"
+
 #include "GestionMenu.h"
 #include "Generateur.h"
 #include "Voie.h"
@@ -32,7 +33,7 @@
 //------------------------------------------------------------------ Types
 
 //---------------------------------------------------- Variables statiques
-
+static pid_t les_voies[NB_VOIES];
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
 // Mode d'emploi :
@@ -100,7 +101,7 @@ int main (void)
 	
 
 	//les pid des taches filles 
-	pid_t pidHeure, pidMenu, pidGenerateur, pidVoie;
+	pid_t pidHeure, pidMenu, pidGenerateur;
 	
 	//Création de la tache Heure
 	pidHeure = CreerEtActiverHeure();
@@ -110,6 +111,7 @@ int main (void)
 	Afficher(MESSAGE, pidGenerateur);
 	//Simulation de la pĥase moteur		
 	//sleep(10);
+	// TODO : peut etre changer l'ordre pour coller avec le dessin des patates
 	if((pidMenu=fork())==0)
 	{// Fille
 
@@ -117,28 +119,51 @@ int main (void)
 	}
 	else
 	{
-		// TODO : Faire la meme chose pour les autres voies. C'etait juste un test pour la boites au lettres
-		if((pidVoie=fork())==0)
+		// TODO : création des feux
+		if((les_voies[INDICE_VOIE_NORD] =fork())==0)
 		{ // Fille
 			Voie(fileVoitures,NORD);
 		}
 		else
 		{ // Mère
-			while(waitpid(pidMenu, 0, 0)==-1 && errno==EINTR)
-			{
-				waitpid(pidMenu, 0, 0);
+			if((les_voies[INDICE_VOIE_SUD] =fork())==0)
+			{// Fille
+				Voie(fileVoitures,SUD);
 			}
-			terminer(pidHeure, pidGenerateur, pidVoie,fileVoitures, semFeux);
+			else
+			{//Mere
+				if((les_voies[INDICE_VOIE_EST] =fork())==0)
+				{// Fille
+					Voie(fileVoitures,EST);
+				}
+				else
+				{// Mere
+					if((les_voies[INDICE_VOIE_OUEST] =fork())==0)
+					{// Fille
+						Voie(fileVoitures,OUEST);
+					}
+					else
+					{ // Mere
+						while(waitpid(pidMenu, 0, 0)==-1 && errno==EINTR)
+						{
+							waitpid(pidMenu, 0, 0);
+						}
+						terminer(pidHeure, pidGenerateur, fileVoitures, semFeux);
+					}
+				}
+			}
 		}
 		return 0;
 	}
 	
 }
-void terminer(pid_t pidHeure, pid_t pidGenerateur,pid_t voie,int fileVoitures, int semFeux)
+void terminer(pid_t pidHeure, pid_t pidGenerateur,int fileVoitures, int semFeux)
 {
-	// TODO : tuer toutes les voies
-	kill(voie, SIGUSR2);
-	waitpid(voie,0,0);
+	for(unsigned int i =0; i<NB_VOIES; i++)
+	{
+		kill(les_voies[i], SIGUSR2);
+		waitpid(les_voies[i],0,0);
+	}
 
 	kill(pidGenerateur, SIGCONT); // On reveille le generateur au cas ou il etait suspendugit p
 	kill(pidGenerateur, SIGUSR2);

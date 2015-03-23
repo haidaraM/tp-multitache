@@ -20,7 +20,11 @@
 //--------------------------------------------------- Interfaces utilisées
 #include "Outils.h"
 //------------------------------------------------------------- Constantes
-
+const unsigned int NB_VOIES = 4;
+const unsigned int INDICE_VOIE_NORD = 0;
+const unsigned int INDICE_VOIE_SUD = 1;
+const unsigned int INDICE_VOIE_OUEST = 2;
+const unsigned int INDICE_VOIE_EST = 3;
 //------------------------------------------------------------------ Types
 
 //////////////////////////////////////////////////////////////////  PUBLIC

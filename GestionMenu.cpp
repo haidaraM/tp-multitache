@@ -82,7 +82,7 @@ void Commande ( TypeVoie entree, TypeVoie sortie )
     Voiture voiture = {entree, sortie, numero_voiture++};
     MsgVoiture msgVoiture = {entree,voiture};
 
-    int resultat = msgsnd(file_voitures,&msgVoiture,TAILLE_MSG_VOITURE-sizeof(long),IPC_NOWAIT);
+    int resultat = msgsnd(file_voitures,&msgVoiture,TAILLE_MSG_VOITURE,IPC_NOWAIT);
     Effacer(MESSAGE);
     if(resultat == -1)
     {

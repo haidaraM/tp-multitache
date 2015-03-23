@@ -82,17 +82,24 @@ static void initialisation()
 void Moteur()
 {
     // TODO : penser à la mise à de la zone Voiture pour la derniere voiture arrivée
-
+    // TODO : Mettre à jour la liste des voitures en attente
     for(;;)
     {
-        sleep(1);
+
         MsgVoiture nouvelleCaisse;
-        int res = msgrcv(file_voitures,&nouvelleCaisse,TAILLE_MSG_VOITURE-sizeof(long),type_voie,IPC_NOWAIT);
+        int res = (int) msgrcv(file_voitures,&nouvelleCaisse,TAILLE_MSG_VOITURE,type_voie,IPC_NOWAIT);
         if(res != -1)
         {
+            unsigned int num = nouvelleCaisse.uneVoiture.numero;
+            TypeVoie entree = nouvelleCaisse.uneVoiture.entree;
+            TypeVoie sortie = nouvelleCaisse.uneVoiture.sortie;
 
-            Effacer(MESSAGE);
-            Afficher(MESSAGE, "Retrait ok");
+            Afficher(NUMERO,num,GRAS);
+            Afficher(ENTREE,entree, GRAS);
+            Afficher(SORTIE,sortie, GRAS);
+            //Effacer(MESSAGE);
+            //Afficher(MESSAGE, nouvelleCaisse.uneVoiture.entree);
+            DeplacerVoiture(num,entree,sortie);
         }
 
     }
