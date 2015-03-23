@@ -15,9 +15,11 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <sys/msg.h>
 
 //------------------------------------------------------ Include personnel
 #include "Voie.h"
+#include "Voiture.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -26,6 +28,9 @@
 
 //---------------------------------------------------- Variables statiques
 static std::vector<pid_t > les_deplacements;
+static int file_voitures;
+static TypeVoie type_voie;
+
 
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
@@ -45,12 +50,14 @@ static void finTache(int numero_signal)
         kill(SIGUSR2,les_deplacements[i]);
         waitpid(les_deplacements[i],0,0);
     }
+    exit(0);
 }
 
 static void finFils(int numero_signal)
 {
     // Synchro de fin avec n'importe quel fils
-    waitpid(-1,0,0);
+    //TODO : enlever le fils du vecteur
+    pid_t pid_t1 = waitpid(-1,0,0);
 }
 
 static void initialisation()
@@ -69,22 +76,39 @@ static void initialisation()
     // Armement des handler
     sigaction(SIGUSR2,&fin_tache, NULL);
     sigaction(SIGCHLD, &fin_fils, NULL);
+}
 
-    // recuperation pid generateur
 
+void Moteur()
+{
+    // TODO : penser à la mise à de la zone Voiture pour la derniere voiture arrivée
 
+    for(;;)
+    {
+        sleep(1);
+        MsgVoiture nouvelleCaisse;
+        int res = msgrcv(file_voitures,&nouvelleCaisse,TAILLE_MSG_VOITURE-sizeof(long),type_voie,IPC_NOWAIT);
+        if(res != -1)
+        {
+
+            Effacer(MESSAGE);
+            Afficher(MESSAGE, "Retrait ok");
+        }
+
+    }
 }
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-void Voie ()
+void Voie (int fileVoitures, TypeVoie typeVoie)
 // Algorithme :
 //
 {
-    //TODO : recuperer boite au lettres
     //TODO : recuperer memoire partagée pour les états des feux
+    file_voitures = fileVoitures;
+    type_voie = typeVoie;
     initialisation();
-
+    Moteur();
 } //----- fin de Void
 
 

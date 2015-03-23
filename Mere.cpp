@@ -24,6 +24,7 @@
 #include "errno.h"
 #include "GestionMenu.h"
 #include "Generateur.h"
+#include "Voie.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -89,7 +90,7 @@ int main (void)
 	}
 	else
 	{
-		Afficher (MESSAGE, "Bonjour");
+		Afficher (MESSAGE, fileVoitures);
 	}
 
 	//Création du sémaphore de protection de la mémoire partagée
@@ -99,7 +100,7 @@ int main (void)
 	
 
 	//les pid des taches filles 
-	pid_t pidHeure, pidMenu, pidGenerateur;
+	pid_t pidHeure, pidMenu, pidGenerateur, pidVoie;
 	
 	//Création de la tache Heure
 	pidHeure = CreerEtActiverHeure();
@@ -110,24 +111,36 @@ int main (void)
 	//Simulation de la pĥase moteur		
 	//sleep(10);
 	if((pidMenu=fork())==0)
-	{
-		// TODO : me donner le pid du generateur
-		GestionMenu(pidGenerateur);
+	{// Fille
+
+		GestionMenu(pidGenerateur, fileVoitures);
 	}
 	else
 	{
-		while(waitpid(pidMenu, 0, 0)==-1 && errno==EINTR)
-		{
-		waitpid(pidMenu, 0, 0);
+		// TODO : Faire la meme chose pour les autres voies. C'etait juste un test pour la boites au lettres
+		if((pidVoie=fork())==0)
+		{ // Fille
+			Voie(fileVoitures,NORD);
 		}
-		terminer(pidHeure, pidGenerateur, fileVoitures, semFeux);
+		else
+		{ // Mère
+			while(waitpid(pidMenu, 0, 0)==-1 && errno==EINTR)
+			{
+				waitpid(pidMenu, 0, 0);
+			}
+			terminer(pidHeure, pidGenerateur, pidVoie,fileVoitures, semFeux);
+		}
 		return 0;
 	}
 	
 }
-void terminer(pid_t pidHeure, pid_t pidGenerateur, int fileVoitures, int semFeux)
+void terminer(pid_t pidHeure, pid_t pidGenerateur,pid_t voie,int fileVoitures, int semFeux)
 {
-	kill(pidGenerateur, SIGCONT); // On reveille le generateur au cas ou il etait suspendu
+	// TODO : tuer toutes les voies
+	kill(voie, SIGUSR2);
+	waitpid(voie,0,0);
+
+	kill(pidGenerateur, SIGCONT); // On reveille le generateur au cas ou il etait suspendugit p
 	kill(pidGenerateur, SIGUSR2);
 	waitpid(pidGenerateur, 0, 0);
 	//envoi de sigusr2 à heure : commande de kill

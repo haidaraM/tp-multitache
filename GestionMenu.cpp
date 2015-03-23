@@ -12,6 +12,7 @@
 //-------------------------------------------------------- Include système
 #include <stdlib.h>
 #include <signal.h>
+#include <sys/msg.h>
 
 //------------------------------------------------------ Include personnel
 #include "GestionMenu.h"
@@ -28,6 +29,7 @@
 static bool etat_generateur = false;
 static unsigned int numero_voiture = 1;
 static pid_t pid_generateur;
+static int file_voitures;
 
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
@@ -42,12 +44,11 @@ static pid_t pid_generateur;
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-void GestionMenu(pid_t generateur)
+void GestionMenu(pid_t generateur, int fileVoitures)
 // Algorithme :
 //
 {
-//TODO : recuperer indentifiant boite aux lettres voitures
-//TODO : recuperer le pid du generateur
+    file_voitures = fileVoitures;
     pid_generateur = generateur;
     Menu();
 } //----- fin de Nom
@@ -77,12 +78,21 @@ void Commande ( char code )
 
 void Commande ( TypeVoie entree, TypeVoie sortie )
 {
-    //TODO : Mettre la voiture dans la boite aux lettres
+
     Voiture voiture = {entree, sortie, numero_voiture++};
     MsgVoiture msgVoiture = {entree,voiture};
+
+    int resultat = msgsnd(file_voitures,&msgVoiture,TAILLE_MSG_VOITURE-sizeof(long),IPC_NOWAIT);
+    Effacer(MESSAGE);
+    if(resultat == -1)
+    {
+        Afficher(MESSAGE,"Probleme de dépot dans la boite aux lettres");
+    }
+    else
+        Afficher(MESSAGE,"Depot ok");
 }
 
 void Commande ( TypeVoie voie, unsigned int duree )
 {
-    //TODO : Gestion de la commande D
+    //TODO : Gestion de la commande D => accès memoire partagée
 }
