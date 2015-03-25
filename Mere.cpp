@@ -51,8 +51,7 @@ static pid_t les_voies[NB_VOIES];
 // Algorithme :
 //
 //----- fin de Nom
-int main (void)
-{	
+int main (void) {
 	key_t privatekey = ftok("./TP-Multitache/Carrefour", 'a');
 	//Les id des IPC
 	int fileVoitures, semFeux;
@@ -60,102 +59,95 @@ int main (void)
 	//handler de masquage
 	struct sigaction action;
 	action.sa_handler = masquage;
-	sigaction (SIGINT, &action, NULL); // masquage du Ctl+C
-	sigaction (SIGCHLD, &action, NULL);// masquage du signal de mort d'un fils 
-	sigaction (SIGUSR2, &action, NULL);// masquage de SIGUSR2
-	
+	sigaction(SIGINT, &action, NULL); // masquage du Ctl+C
+	sigaction(SIGCHLD, &action, NULL);// masquage du signal de mort d'un fils
+	sigaction(SIGUSR2, &action, NULL);// masquage de SIGUSR2
+
 	//Lancement de l'application
 	InitialiserApplication(XTERM);
 
 	//Création de la file de Message
-	fileVoitures = msgget(privatekey, 0770|IPC_CREAT);
-	if (errno == EACCES)
-	{
+	fileVoitures = msgget(privatekey, 0770 | IPC_CREAT);
+	if (errno == EACCES) {
 		Afficher(MESSAGE, "Erreur EACCES à la création de la file");
 	}
-	else if (errno == EEXIST)
-	{
+	else if (errno == EEXIST) {
 		Afficher(MESSAGE, "Erreur EEXIST à la crétion de la file");
 	}
-	else if (errno == ENOENT)
-	{
+	else if (errno == ENOENT) {
 		Afficher(MESSAGE, "Erreur ENOENT à la crétion de la file");
 	}
-	else if (errno == ENOMEM)
-	{
+	else if (errno == ENOMEM) {
 		Afficher(MESSAGE, "Erreur ENOMEM à la création de la file");
 	}
-	else if (errno == ENOSPC)
-	{
+	else if (errno == ENOSPC) {
 		Afficher(MESSAGE, "Erreur ENOSPC à la création de la file");
 	}
-	else
-	{
-		Afficher (MESSAGE, fileVoitures);
+	else {
+		//Afficher (MESSAGE, fileVoitures);
 	}
 
 	//Création du sémaphore de protection de la mémoire partagée
 	semFeux = semget(privatekey, 1, IPC_CREAT);
 
 	//Création du fragment de mémoire partagé pour a gestion des Feux
-	
+
 
 	//les pid des taches filles 
 	pid_t pidHeure, pidMenu, pidGenerateur;
-	
+
 	//Création de la tache Heure
 	pidHeure = CreerEtActiverHeure();
 
 	//Création de la tache Générateur
 	pidGenerateur = CreerEtActiverGenerateur(0, fileVoitures);
-	Afficher(MESSAGE, pidGenerateur);
+	//Afficher(MESSAGE, pidGenerateur);
 	//Simulation de la pĥase moteur		
 	//sleep(10);
-	// TODO : peut etre changer l'ordre pour coller avec le dessin des patates
-	if((pidMenu=fork())==0)
-	{// Fille
 
-		GestionMenu(pidGenerateur, fileVoitures);
+	// TODO : création des feux
+	if ((les_voies[INDICE_VOIE_NORD] = fork()) == 0)
+	{ // Fille
+		Voie(fileVoitures, NORD);
 	}
 	else
-	{
-		// TODO : création des feux
-		if((les_voies[INDICE_VOIE_NORD] =fork())==0)
-		{ // Fille
-			Voie(fileVoitures,NORD);
+	{ // Mère
+		if ((les_voies[INDICE_VOIE_SUD] = fork()) == 0)
+		{// Fille
+			Voie(fileVoitures, SUD);
 		}
 		else
-		{ // Mère
-			if((les_voies[INDICE_VOIE_SUD] =fork())==0)
+		{//Mere
+			if ((les_voies[INDICE_VOIE_EST] = fork()) == 0)
 			{// Fille
-				Voie(fileVoitures,SUD);
+				Voie(fileVoitures, EST);
 			}
 			else
-			{//Mere
-				if((les_voies[INDICE_VOIE_EST] =fork())==0)
+			{// Mere
+				if ((les_voies[INDICE_VOIE_OUEST] = fork()) == 0)
 				{// Fille
-					Voie(fileVoitures,EST);
+					Voie(fileVoitures, OUEST);
 				}
 				else
-				{// Mere
-					if((les_voies[INDICE_VOIE_OUEST] =fork())==0)
+				{ // Mere
+					if ((pidMenu = fork()) == 0)
 					{// Fille
-						Voie(fileVoitures,OUEST);
+						GestionMenu(pidGenerateur, fileVoitures);
 					}
 					else
-					{ // Mere
-						while(waitpid(pidMenu, 0, 0)==-1 && errno==EINTR)
+					{
+						while (waitpid(pidMenu, 0, 0) == -1 && errno == EINTR)
 						{
 							waitpid(pidMenu, 0, 0);
 						}
 						terminer(pidHeure, pidGenerateur, fileVoitures, semFeux);
+						return 0;
 					}
 				}
 			}
 		}
-		return 0;
+
 	}
-	
 }
 void terminer(pid_t pidHeure, pid_t pidGenerateur,int fileVoitures, int semFeux)
 {
@@ -163,8 +155,10 @@ void terminer(pid_t pidHeure, pid_t pidGenerateur,int fileVoitures, int semFeux)
 	{
 		kill(les_voies[i], SIGUSR2);
 		waitpid(les_voies[i],0,0);
+		Effacer(MESSAGE);
+		Afficher(MESSAGE,"Attente voie");
 	}
-
+	Effacer(MESSAGE);
 	kill(pidGenerateur, SIGCONT); // On reveille le generateur au cas ou il etait suspendugit p
 	kill(pidGenerateur, SIGUSR2);
 	waitpid(pidGenerateur, 0, 0);

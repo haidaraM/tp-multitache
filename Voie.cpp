@@ -11,12 +11,15 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
 #include <vector>
+#include <list>
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <sys/msg.h>
+#include <bits/stl_algo.h>
 
+using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Voie.h"
 #include "Voiture.h"
@@ -27,7 +30,7 @@
 //------------------------------------------------------------------ Types
 
 //---------------------------------------------------- Variables statiques
-static std::vector<pid_t > les_deplacements;
+static list<pid_t> les_deplacements;
 static int file_voitures;
 static TypeVoie type_voie;
 
@@ -45,10 +48,11 @@ static TypeVoie type_voie;
 
 static void finTache(int numero_signal)
 {
-    for(unsigned int i = 0; i<les_deplacements.size(); i++)
+    list<pid_t>::iterator it ;
+    for(it= les_deplacements.begin(); it!=les_deplacements.end(); ++it)
     {
-        kill(SIGUSR2,les_deplacements[i]);
-        waitpid(les_deplacements[i],0,0);
+        kill(*it,SIGUSR2);
+        waitpid(*it,0,0);
     }
     exit(0);
 }
@@ -57,7 +61,17 @@ static void finFils(int numero_signal)
 {
     // Synchro de fin avec n'importe quel fils
     //TODO : enlever le fils du vecteur
-    pid_t pid_t1 = waitpid(-1,0,0);
+    pid_t fils = waitpid(-1,0,0);
+    list<pid_t>::iterator it;
+    int done = false;
+    for(it = les_deplacements.begin(); it!=les_deplacements.end() && !done; ++it)
+    {
+        if(fils == *it)
+        {
+            done = true;
+            it=les_deplacements.erase(it);
+        }
+    }
 }
 
 static void initialisation()
@@ -85,7 +99,6 @@ void Moteur()
     // TODO : Mettre à jour la liste des voitures en attente
     for(;;)
     {
-
         MsgVoiture nouvelleCaisse;
         int res = (int) msgrcv(file_voitures,&nouvelleCaisse,TAILLE_MSG_VOITURE,type_voie,IPC_NOWAIT);
         if(res != -1)
@@ -97,9 +110,10 @@ void Moteur()
             Afficher(NUMERO,num,GRAS);
             Afficher(ENTREE,entree, GRAS);
             Afficher(SORTIE,sortie, GRAS);
-            //Effacer(MESSAGE);
-            //Afficher(MESSAGE, nouvelleCaisse.uneVoiture.entree);
-            DeplacerVoiture(num,entree,sortie);
+            /*Effacer(MESSAGE);
+            Afficher(MESSAGE, "retrait ok");*/
+            pid_t voiture = DeplacerVoiture(num,entree,sortie);
+            les_deplacements.push_back(voiture);
         }
 
     }
