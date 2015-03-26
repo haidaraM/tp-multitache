@@ -13,6 +13,8 @@ set(SOURCE_FILES GestionMenu.cpp
                  Mere.cpp
                  Voie.h
                  Voie.cpp
+                 Feu.h
+                 Feu.cpp
                  )
 add_executable(tp_multitache ${SOURCE_FILES})
 

@@ -22,7 +22,7 @@ CPPFLAGS	= $(DEFINE) -Wall -ansi -ggdb -std=c++11
 EDLFLAGS	= -L/share/public/tp/tp-multitache/
 
 #Fichiers
-INTERFACES_FILES		= GestionMenu.h	Voie.h				
+INTERFACES_FILES		= GestionMenu.h	Voie.h	Feu.h
 INT 		            = $(addprefix $(SRC_DIR), $(INTERFACES_FILES))					# construit le chemin des sources
 OBJ			            = $(addprefix $(OBJ_DIR), $(INTERFACES_FILES:.h=.o))			# Génération du nom des fichiers obj
 MAIN_OBJ             	= Mere.o 											# .o du fichier ou se trouve le main

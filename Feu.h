@@ -1,30 +1,26 @@
 /*************************************************************************
-                           Voie  -  description
+                           Feu  -  description
                              -------------------
-    début                : 19/03/2014
-    copyright            : (C) 2015 par Mohamed HAIDARA
-    e-mail               : mohamed.haidara@insa-lyon.fr
+    début                : 26/03/2015
+    copyright            : (C) 2015 par Emilien
+    e-mail               : Feu
 *************************************************************************/
 
-//---------- Interface de la tâche <Voie> (fichier Voie.h) -------
-#if ! defined ( VOIE_H )
-#define VOIE_H
+//---------- Interface de la tâche <Feu> (fichier Feu.h) -------
+#if ! defined ( FEU_H )
+#define FEU_H
 
 //------------------------------------------------------------------------
-// Rôle de la tâche <Voie>
+// Rôle de la tâche <Feu>
 //
 //
 //------------------------------------------------------------------------
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //--------------------------------------------------- Interfaces utilisées
-#include "Outils.h"
+
 //------------------------------------------------------------- Constantes
-const unsigned int NB_VOIES = 4;
-const unsigned int INDICE_VOIE_NORD = 0;
-const unsigned int INDICE_VOIE_SUD = 1;
-const unsigned int INDICE_VOIE_OUEST = 2;
-const unsigned int INDICE_VOIE_EST = 3;
+
 //------------------------------------------------------------------ Types
 
 //////////////////////////////////////////////////////////////////  PUBLIC
@@ -35,14 +31,7 @@ const unsigned int INDICE_VOIE_EST = 3;
 // Contrat :
 //
 
-// void Voie();
-// Mode d'emploi : Gestion des voies
-//
-// Contrat :
-//
+void Feu(int memoirePartagee);
 
-void Voie(int fileVoitures, int sem, TypeVoie typeVoie);
-
-
-#endif // VOIE_H
+#endif // FEU_H
 

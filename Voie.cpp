@@ -32,7 +32,7 @@ using namespace std;
 static list<pid_t> les_deplacements;
 static int file_voitures;
 static TypeVoie type_voie;
-
+static int semaphore_feu;
 
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
@@ -47,13 +47,13 @@ static TypeVoie type_voie;
 
 static void finTache(int numero_signal)
 {
+    // Masque de SIGUSR2
     struct sigaction action;
     action.sa_handler = SIG_IGN;
     sigemptyset(&action.sa_mask);
     sigaction(SIGCHLD, &action, NULL); // masquage du Ctl+C
     list<pid_t>::iterator it ;
-    Afficher(MESSAGE, "Je rentre bien dans Q");
-    for(it= les_deplacements.begin(); it != les_deplacements.end(); it++)
+    for(it = les_deplacements.begin(); it != les_deplacements.end(); it++)
     {
         kill(*it,SIGUSR2);
         waitpid(*it,0,0);
@@ -64,10 +64,7 @@ static void finTache(int numero_signal)
 static void finFils(int numero_signal)
 {
     // Synchro de fin avec n'importe quel fils
-    //TODO : enlever le fils du vecteur
     pid_t fils = waitpid(-1,0,0);
-    Effacer(MESSAGE);
-    Afficher(MESSAGE, "Fin fils");
     list<pid_t>::iterator it;
     int done = false;
     for(it = les_deplacements.begin(); it!=les_deplacements.end() && !done; ++it)
@@ -80,9 +77,11 @@ static void finFils(int numero_signal)
     }
 }
 
-static void initialisation()
+static void initialisation(int fileVoitures,int sem, TypeVoie typeVoie)
 {
-    // TODO : Ignorer les signaux
+    file_voitures = fileVoitures;
+    type_voie = typeVoie;
+    semaphore_feu = sem;
     // création des handlers
     struct sigaction fin_tache, fin_fils;
     fin_tache.sa_flags = 0;
@@ -127,14 +126,11 @@ void Moteur()
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-void Voie (int fileVoitures, TypeVoie typeVoie)
+void Voie (int fileVoitures,int sem, TypeVoie typeVoie)
 // Algorithme :
 //
 {
-    //TODO : recuperer memoire partagée pour les états des feux
-    file_voitures = fileVoitures;
-    type_voie = typeVoie;
-    initialisation();
+    initialisation(fileVoitures,sem,typeVoie);
     Moteur();
 } //----- fin de Void
 

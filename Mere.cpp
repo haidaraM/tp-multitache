@@ -22,10 +22,10 @@
 #include "Mere.h"
 #include "Outils.h"
 #include "Heure.h"
-
 #include "GestionMenu.h"
 #include "Generateur.h"
 #include "Voie.h"
+#include "Feu.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -58,6 +58,7 @@ int main (void) {
 
 	//handler de masquage
 	struct sigaction action;
+	sigemptyset(&action.sa_mask);
 	action.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &action, NULL); // masquage du Ctl+C
 	sigaction(SIGCHLD, &action, NULL);// masquage du signal de mort d'un fils
@@ -101,32 +102,29 @@ int main (void) {
 
 	//Création de la tache Générateur
 	pidGenerateur = CreerEtActiverGenerateur(0, fileVoitures);
-	//Afficher(MESSAGE, pidGenerateur);
-	//Simulation de la pĥase moteur		
-	//sleep(10);
 
 	// TODO : création des feux
 	if ((les_voies[INDICE_VOIE_NORD] = fork()) == 0)
 	{ // Fille
-		Voie(fileVoitures, NORD);
+		Voie(fileVoitures,semFeux, NORD);
 	}
 	else
 	{ // Mère
 		if ((les_voies[INDICE_VOIE_SUD] = fork()) == 0)
 		{// Fille
-			Voie(fileVoitures, SUD);
+			Voie(fileVoitures,semFeux, SUD);
 		}
 		else
 		{//Mere
 			if ((les_voies[INDICE_VOIE_EST] = fork()) == 0)
 			{// Fille
-				Voie(fileVoitures, EST);
+				Voie(fileVoitures,semFeux, EST);
 			}
 			else
 			{// Mere
 				if ((les_voies[INDICE_VOIE_OUEST] = fork()) == 0)
 				{// Fille
-					Voie(fileVoitures, OUEST);
+					Voie(fileVoitures,semFeux, OUEST);
 				}
 				else
 				{ // Mere
@@ -152,11 +150,8 @@ void terminer(pid_t pidHeure, pid_t pidGenerateur,int fileVoitures, int semFeux)
 	{
 		kill(les_voies[i], SIGUSR2);
 		waitpid(les_voies[i],0,0);
-		Effacer(MESSAGE);
-		//Afficher(MESSAGE,"Attente voie");
 	}
-	Effacer(MESSAGE);
-	kill(pidGenerateur, SIGCONT); // On reveille le generateur au cas ou il etait suspendugit p
+	kill(pidGenerateur, SIGCONT); // On reveille le generateur au cas ou il etait suspendu
 	kill(pidGenerateur, SIGUSR2);
 	waitpid(pidGenerateur, 0, 0);
 	//envoi de sigusr2 à heure : commande de kill
