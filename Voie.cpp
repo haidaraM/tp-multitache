@@ -49,7 +49,7 @@ static TypeVoie type_voie;
 static void finTache(int numero_signal)
 {
     list<pid_t>::iterator it ;
-    for(it= les_deplacements.begin(); it!=les_deplacements.end(); ++it)
+    for(it= les_deplacements.begin(); it != les_deplacements.end(); it++)
     {
         kill(*it,SIGUSR2);
         waitpid(*it,0,0);
