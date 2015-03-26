@@ -10,7 +10,6 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //-------------------------------------------------------- Include système
-#include <vector>
 #include <list>
 #include <unistd.h>
 #include <signal.h>
@@ -52,7 +51,7 @@ static void finTache(int numero_signal)
     for(it= les_deplacements.begin(); it != les_deplacements.end(); it++)
     {
         kill(*it,SIGUSR2);
-        waitpid(*it,0,0);
+        //waitpid(*it,0,0);
     }
     exit(0);
 }
@@ -62,7 +61,7 @@ static void finFils(int numero_signal)
     // Synchro de fin avec n'importe quel fils
     //TODO : enlever le fils du vecteur
     pid_t fils = waitpid(-1,0,0);
-    list<pid_t>::iterator it;
+  /*  list<pid_t>::iterator it;
     int done = false;
     for(it = les_deplacements.begin(); it!=les_deplacements.end() && !done; ++it)
     {
@@ -71,7 +70,7 @@ static void finFils(int numero_signal)
             done = true;
             it=les_deplacements.erase(it);
         }
-    }
+    }*/
 }
 
 static void initialisation()
