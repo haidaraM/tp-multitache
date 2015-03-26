@@ -58,7 +58,7 @@ int main (void) {
 
 	//handler de masquage
 	struct sigaction action;
-	action.sa_handler = masquage;
+	action.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &action, NULL); // masquage du Ctl+C
 	sigaction(SIGCHLD, &action, NULL);// masquage du signal de mort d'un fils
 	sigaction(SIGUSR2, &action, NULL);// masquage de SIGUSR2
@@ -153,7 +153,7 @@ void terminer(pid_t pidHeure, pid_t pidGenerateur,int fileVoitures, int semFeux)
 		kill(les_voies[i], SIGUSR2);
 		waitpid(les_voies[i],0,0);
 		Effacer(MESSAGE);
-		Afficher(MESSAGE,"Attente voie");
+		//Afficher(MESSAGE,"Attente voie");
 	}
 	Effacer(MESSAGE);
 	kill(pidGenerateur, SIGCONT); // On reveille le generateur au cas ou il etait suspendugit p
@@ -169,5 +169,3 @@ void terminer(pid_t pidHeure, pid_t pidGenerateur,int fileVoitures, int semFeux)
 	msgctl(fileVoitures, IPC_RMID, 0);
 	TerminerApplication();
 }
-
-void masquage(int noSig){}
