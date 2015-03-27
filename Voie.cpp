@@ -16,7 +16,6 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <sys/msg.h>
-#include <bits/stl_algo.h>
 
 using namespace std;
 //------------------------------------------------------ Include personnel
@@ -98,10 +97,11 @@ static void initialisation(int fileVoitures,int sem, TypeVoie typeVoie)
 }
 
 
-void Moteur()
+void moteur()
 {
     // TODO : penser à la mise à de la zone Voiture pour la derniere voiture arrivée
     // TODO : Mettre à jour la liste des voitures en attente
+    // TODO : lecture de la mémoire partagée
     for(;;)
     {
         MsgVoiture nouvelleCaisse;
@@ -131,7 +131,7 @@ void Voie (int fileVoitures,int sem, TypeVoie typeVoie)
 //
 {
     initialisation(fileVoitures,sem,typeVoie);
-    Moteur();
+    moteur();
 } //----- fin de Void
 
 

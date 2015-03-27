@@ -22,7 +22,7 @@
 //------------------------------------------------------------------ Types
 
 //---------------------------------------------------- Variables statiques
-static int memoire_partagee;
+static int* memoire_partagee;
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
 // Mode d'emploi :
@@ -36,17 +36,19 @@ static int memoire_partagee;
 
 static void fin_tache(int numerosignal)
 {
+    //TODO : je sais plus s'il ya des trucs à faire ou pas
     exit(0);
 }
 
 
-static void initialisation(int mem)
+static void initialisation(int *mem)
 {
+    memoire_partagee = mem;
+
     struct sigaction action;
     sigemptyset(&action.sa_mask);
     action.sa_handler=fin_tache;
     sigaction(SIGUSR2, &action, NULL);
-    memoire_partagee = mem;
 }
 
 static void moteur()
@@ -59,10 +61,11 @@ static void moteur()
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-void Feu(int mem)
+void Feu(int * ptrSharedMemory)
 // Algorithme :
 //
 {
-    initialisation(mem);
+    initialisation(ptrSharedMemory);
+    moteur();
 } //----- fin de Nom
 

@@ -17,6 +17,7 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <sys/sem.h>
+#include <sys/shm.h>
 #include <errno.h>
 //------------------------------------------------------ Include personnel
 #include "Mere.h"
@@ -34,6 +35,13 @@
 
 //---------------------------------------------------- Variables statiques
 static pid_t les_voies[NB_VOIES];
+static int sharedMemory;
+static int semFeux;
+static int fileVoitures;
+static pid_t pid_feu;
+static pid_t pidHeure;
+static pid_t pidGenerateur;
+static pid_t pidMenu;
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
 // Mode d'emploi :
@@ -52,9 +60,7 @@ static pid_t les_voies[NB_VOIES];
 //
 //----- fin de Nom
 int main (void) {
-	key_t privatekey = ftok("./TP-Multitache/Carrefour", 'a');
-	//Les id des IPC
-	int fileVoitures, semFeux;
+	key_t publickey = ftok("./TP-Multitache/Carrefour", 'a');
 
 	//handler de masquage
 	struct sigaction action;
@@ -68,7 +74,7 @@ int main (void) {
 	InitialiserApplication(XTERM);
 
 	//Création de la file de Message
-	fileVoitures = msgget(privatekey, 0770 | IPC_CREAT);
+	fileVoitures = msgget(publickey, 0770 | IPC_CREAT);
 	if (errno == EACCES) {
 		Afficher(MESSAGE, "Erreur EACCES à la création de la file");
 	}
@@ -89,13 +95,11 @@ int main (void) {
 	}
 
 	//Création du sémaphore de protection de la mémoire partagée
-	semFeux = semget(privatekey, 1, IPC_CREAT);
+	semFeux = semget(publickey, 1, IPC_CREAT);
 
 	//Création du fragment de mémoire partagé pour a gestion des Feux
-
-
-	//les pid des taches filles 
-	pid_t pidHeure, pidMenu, pidGenerateur;
+	sharedMemory = shmget(publickey,1024,0770|IPC_CREAT);
+	int * data =(int*) shmat(sharedMemory,(void*)0,0);
 
 	//Création de la tache Heure
 	pidHeure = CreerEtActiverHeure();
@@ -103,64 +107,83 @@ int main (void) {
 	//Création de la tache Générateur
 	pidGenerateur = CreerEtActiverGenerateur(0, fileVoitures);
 
-	// TODO : création des feux
-	if ((les_voies[INDICE_VOIE_NORD] = fork()) == 0)
-	{ // Fille
-		Voie(fileVoitures,semFeux, NORD);
+	// TODO : completer la création des feux si c'est pas bon
+	if((pid_feu=fork())==0)
+	{// Fille
+		Feu(data);
 	}
 	else
-	{ // Mère
-		if ((les_voies[INDICE_VOIE_SUD] = fork()) == 0)
-		{// Fille
-			Voie(fileVoitures,semFeux, SUD);
+	{
+		// Mere
+		if ((les_voies[INDICE_VOIE_NORD] = fork()) == 0)
+		{ // Fille
+			Voie(fileVoitures,semFeux, NORD);
 		}
 		else
-		{//Mere
-			if ((les_voies[INDICE_VOIE_EST] = fork()) == 0)
+		{ // Mère
+			if ((les_voies[INDICE_VOIE_SUD] = fork()) == 0)
 			{// Fille
-				Voie(fileVoitures,semFeux, EST);
+				Voie(fileVoitures,semFeux, SUD);
 			}
 			else
-			{// Mere
-				if ((les_voies[INDICE_VOIE_OUEST] = fork()) == 0)
+			{//Mere
+				if ((les_voies[INDICE_VOIE_EST] = fork()) == 0)
 				{// Fille
-					Voie(fileVoitures,semFeux, OUEST);
+					Voie(fileVoitures,semFeux, EST);
 				}
 				else
-				{ // Mere
-					if ((pidMenu = fork()) == 0)
+				{// Mere
+					if ((les_voies[INDICE_VOIE_OUEST] = fork()) == 0)
 					{// Fille
-						GestionMenu(pidGenerateur, fileVoitures);
+						Voie(fileVoitures,semFeux, OUEST);
 					}
 					else
-					{
-						while(waitpid(pidMenu, 0, 0) == -1 && errno == EINTR);
-						terminer(pidHeure, pidGenerateur, fileVoitures, semFeux);
-						return 0;
+					{ // Mere
+						if ((pidMenu = fork()) == 0)
+						{// Fille
+							GestionMenu(pidGenerateur, fileVoitures);
+						}
+						else
+						{
+							while(waitpid(pidMenu, 0, 0) == -1 && errno == EINTR);
+							terminer();
+							return 0;
+						}
 					}
 				}
 			}
-		}
 
+		}
 	}
 }
-void terminer(pid_t pidHeure, pid_t pidGenerateur,int fileVoitures, int semFeux)
+void terminer()
 {
+	// Destruction des voies
 	for(unsigned int i =0; i<NB_VOIES; i++)
 	{
 		kill(les_voies[i], SIGUSR2);
 		waitpid(les_voies[i],0,0);
 	}
+
+	// destruction des feux
+	kill(pid_feu,SIGUSR2);
+	waitpid(pid_feu,0,0);
+
 	kill(pidGenerateur, SIGCONT); // On reveille le generateur au cas ou il etait suspendu
 	kill(pidGenerateur, SIGUSR2);
 	waitpid(pidGenerateur, 0, 0);
+
 	//envoi de sigusr2 à heure : commande de kill
 	kill( pidHeure , SIGUSR2);
-	//waitpid
 	waitpid(pidHeure, 0, 0);
+
 	//Destuction du sémaphore pour la mémoire memFeux
 	semctl(semFeux, 0, IPC_RMID, 0);
+
 	//Destruction de la file de Messages
 	msgctl(fileVoitures, IPC_RMID, 0);
+
+	// destruction de la memoire partagée
+	shmctl(sharedMemory,IPC_RMID,0);
 	TerminerApplication();
 }

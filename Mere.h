@@ -35,10 +35,7 @@ int main (void);
 //la tache pricipale de l'application
 //
 
-void masquage(int noSig);
-//fonction vide masquant la reception des signaux
-
-void terminer(pid_t pidHeure, pid_t pidGenerateur,int fileVoitures, int semFeux);
+void terminer();
 //Fonction de terminaison de l'application
 
 
