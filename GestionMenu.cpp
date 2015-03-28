@@ -42,15 +42,26 @@ static int file_voitures;
 //{
 //} //----- fin de nom
 
+
+static void initialisation(pid_t generateur, int fileVoitures)
+{
+    file_voitures = fileVoitures;
+    pid_generateur = generateur;
+}
+
+static void moteur()
+{
+    Menu();
+}
+
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
 void GestionMenu(pid_t generateur, int fileVoitures)
 // Algorithme :
 //
 {
-    file_voitures = fileVoitures;
-    pid_generateur = generateur;
-    Menu();
+    initialisation(generateur,fileVoitures);
+    moteur();
 } //----- fin de Nom
 
 void Commande ( char code )

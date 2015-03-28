@@ -145,7 +145,7 @@ int main (void) {
 						}
 						else
 						{
-							while(waitpid(pidMenu, 0, 0) == -1 && errno == EINTR);
+							waitpid(pidMenu, 0, 0);
 							terminer();
 							return 0;
 						}
