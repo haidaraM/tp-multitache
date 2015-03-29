@@ -100,14 +100,11 @@ int main (void) {
 	semFeux = semget(publickey, 1, IPC_CREAT);
 
 	//Création du fragment de mémoire partagé pour a gestion des Feux
-<<<<<<< HEAD
 	sharedMemory = shmget(publickey,4*sizeof(int),0770|IPC_CREAT);
 	//int * data =(int*) shmat(sharedMemory,(void*)0,0);
-=======
 	sharedMemory = shmget(publickey,sizeof(int)*4,0770|IPC_CREAT);
 	// on s'attache
 	int * data =(int*) shmat(sharedMemory,(void*)0,0);
->>>>>>> 5c0bb91bd625c23d34863c8b9ab54c0c4b03d97f
 
 	// initialisation des la duree des feux
 	// TODO : peut etre mettre ça dans la tache feu
