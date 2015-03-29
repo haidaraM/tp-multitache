@@ -12,13 +12,13 @@
 //-------------------------------------------------------- Include système
 #include <sys/wait.h>
 #include <unistd.h>
-#include <signal.h>
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <sys/sem.h>
 #include <sys/shm.h>
 #include <errno.h>
+
 //------------------------------------------------------ Include personnel
 #include "Mere.h"
 #include "Outils.h"
@@ -27,6 +27,7 @@
 #include "Generateur.h"
 #include "Voie.h"
 #include "Feu.h"
+#include "Constantes.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -42,6 +43,7 @@ static pid_t pid_feu;
 static pid_t pidHeure;
 static pid_t pidGenerateur;
 static pid_t pidMenu;
+
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
 // Mode d'emploi :
@@ -60,7 +62,7 @@ static pid_t pidMenu;
 //
 //----- fin de Nom
 int main (void) {
-	key_t publickey = ftok("./TP-Multitache/Carrefour", 'a');
+	key_t publickey = ftok(REFERENCE, 'a');
 
 	//handler de masquage
 	struct sigaction action;
@@ -98,8 +100,22 @@ int main (void) {
 	semFeux = semget(publickey, 1, IPC_CREAT);
 
 	//Création du fragment de mémoire partagé pour a gestion des Feux
+<<<<<<< HEAD
 	sharedMemory = shmget(publickey,4*sizeof(int),0770|IPC_CREAT);
 	//int * data =(int*) shmat(sharedMemory,(void*)0,0);
+=======
+	sharedMemory = shmget(publickey,sizeof(int)*4,0770|IPC_CREAT);
+	// on s'attache
+	int * data =(int*) shmat(sharedMemory,(void*)0,0);
+>>>>>>> 5c0bb91bd625c23d34863c8b9ab54c0c4b03d97f
+
+	// initialisation des la duree des feux
+	// TODO : peut etre mettre ça dans la tache feu
+	data[INDICE_TEMPS_NS]=TEMPS_FEU_NS;
+	data[INDICE_TEMPS_EO]=TEMPS_FEU_EO;
+
+	// on se detache
+	shmdt(data);
 
 	//Création de la tache Heure
 	pidHeure = CreerEtActiverHeure();
@@ -113,46 +129,24 @@ int main (void) {
 		Feu(sharedMemory, semFeux);
 	}
 	else
-	{
-		// Mere
-		if ((les_voies[INDICE_VOIE_NORD] = fork()) == 0)
-		{ // Fille
-			Voie(fileVoitures,semFeux, NORD);
+	{ // mere
+		for (int i = 0; i < NB_VOIES; ++i)
+		{
+			les_voies[i] = fork();
+			if(les_voies[i] == 0)
+			{// fille
+				Voie(fileVoitures,semFeux,sharedMemory,(TypeVoie)(i+1));
+			}
+		}
+		if ((pidMenu = fork()) == 0)
+		{// Fille
+			GestionMenu(pidGenerateur, fileVoitures, sharedMemory);
 		}
 		else
-		{ // Mère
-			if ((les_voies[INDICE_VOIE_SUD] = fork()) == 0)
-			{// Fille
-				Voie(fileVoitures,semFeux, SUD);
-			}
-			else
-			{//Mere
-				if ((les_voies[INDICE_VOIE_EST] = fork()) == 0)
-				{// Fille
-					Voie(fileVoitures,semFeux, EST);
-				}
-				else
-				{// Mere
-					if ((les_voies[INDICE_VOIE_OUEST] = fork()) == 0)
-					{// Fille
-						Voie(fileVoitures,semFeux, OUEST);
-					}
-					else
-					{ // Mere
-						if ((pidMenu = fork()) == 0)
-						{// Fille
-							GestionMenu(pidGenerateur, fileVoitures);
-						}
-						else
-						{
-							waitpid(pidMenu, 0, 0);
-							terminer();
-							return 0;
-						}
-					}
-				}
-			}
-
+		{// mere
+			waitpid(pidMenu, 0, 0);
+			terminer();
+			return 0;
 		}
 	}
 }

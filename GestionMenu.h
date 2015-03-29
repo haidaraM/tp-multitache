@@ -30,7 +30,7 @@
 //
 // Contrat :
 //
-void GestionMenu(pid_t generateur, int fileVoitures);
+void GestionMenu(pid_t generateur, int fileVoitures, int shmid);
 
 #endif // GestionMenu_H
 

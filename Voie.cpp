@@ -32,6 +32,7 @@ static list<pid_t> les_deplacements;
 static int file_voitures;
 static TypeVoie type_voie;
 static int semaphore_feu;
+static int shared_memory_id;
 
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
@@ -76,11 +77,12 @@ static void finFils(int numero_signal)
     }
 }
 
-static void initialisation(int fileVoitures,int sem, TypeVoie typeVoie)
+static void initialisation(int fileVoitures,int sem,int shmid, TypeVoie typeVoie)
 {
     file_voitures = fileVoitures;
     type_voie = typeVoie;
     semaphore_feu = sem;
+    shared_memory_id = shmid;
     // création des handlers
     struct sigaction fin_tache, fin_fils;
     fin_tache.sa_flags = 0;
@@ -99,24 +101,18 @@ static void initialisation(int fileVoitures,int sem, TypeVoie typeVoie)
 
 void moteur()
 {
-    // TODO : penser à la mise à de la zone Voiture pour la derniere voiture arrivée
     // TODO : Mettre à jour la liste des voitures en attente
-    // TODO : lecture de la mémoire partagée
+    // TODO : lecture de la mémoire partagée pour l'etat des feux
     for(;;)
     {
         MsgVoiture nouvelleCaisse;
-        int res = (int) msgrcv(file_voitures,&nouvelleCaisse,TAILLE_MSG_VOITURE,type_voie,IPC_NOWAIT);
+        int res = (int) msgrcv(file_voitures,&nouvelleCaisse,TAILLE_MSG_VOITURE,type_voie,0);
         if(res != -1)
         {
             unsigned int num = nouvelleCaisse.uneVoiture.numero;
             TypeVoie entree = nouvelleCaisse.uneVoiture.entree;
             TypeVoie sortie = nouvelleCaisse.uneVoiture.sortie;
-
-            Afficher(NUMERO,num,GRAS);
-            Afficher(ENTREE,entree, GRAS);
-            Afficher(SORTIE,sortie, GRAS);
-            /*Effacer(MESSAGE);
-            Afficher(MESSAGE, "retrait ok");*/
+            DessinerVoitureFeu(num,entree,sortie);
             pid_t voiture = DeplacerVoiture(num,entree,sortie);
             les_deplacements.push_back(voiture);
         }
@@ -126,11 +122,11 @@ void moteur()
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-void Voie (int fileVoitures,int sem, TypeVoie typeVoie)
+void Voie (int fileVoitures,int sem,int shmid, TypeVoie typeVoie)
 // Algorithme :
 //
 {
-    initialisation(fileVoitures,sem,typeVoie);
+    initialisation(fileVoitures,sem,shmid,typeVoie);
     moteur();
 } //----- fin de Void
 
