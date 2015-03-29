@@ -124,45 +124,24 @@ int main (void) {
 		Feu(data);
 	}
 	else
-	{
-		// Mere
-		if ((les_voies[INDICE_VOIE_NORD] = fork()) == 0)
-		{ // Fille
-			Voie(fileVoitures,semFeux, sharedMemory,NORD);
+	{ // mere
+		for (int i = 0; i < NB_VOIES; ++i)
+		{
+			les_voies[i] = fork();
+			if(les_voies[i] == 0)
+			{// fille
+				Voie(fileVoitures,semFeux,sharedMemory,(TypeVoie)(i+1));
+			}
+		}
+		if ((pidMenu = fork()) == 0)
+		{// Fille
+			GestionMenu(pidGenerateur, fileVoitures, sharedMemory);
 		}
 		else
-		{ // Mère
-			if ((les_voies[INDICE_VOIE_SUD] = fork()) == 0)
-			{// Fille
-				Voie(fileVoitures,semFeux,sharedMemory, SUD);
-			}
-			else
-			{//Mere
-				if ((les_voies[INDICE_VOIE_EST] = fork()) == 0)
-				{// Fille
-					Voie(fileVoitures,semFeux, sharedMemory,EST);
-				}
-				else
-				{// Mere
-					if ((les_voies[INDICE_VOIE_OUEST] = fork()) == 0)
-					{// Fille
-						Voie(fileVoitures,semFeux,sharedMemory, OUEST);
-					}
-					else
-					{ // Mere
-						if ((pidMenu = fork()) == 0)
-						{// Fille
-							GestionMenu(pidGenerateur, fileVoitures, sharedMemory);
-						}
-						else
-						{
-							waitpid(pidMenu, 0, 0);
-							terminer();
-							return 0;
-						}
-					}
-				}
-			}
+		{// mere
+			waitpid(pidMenu, 0, 0);
+			terminer();
+			return 0;
 		}
 	}
 }
