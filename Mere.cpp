@@ -98,8 +98,8 @@ int main (void) {
 	semFeux = semget(publickey, 1, IPC_CREAT);
 
 	//Création du fragment de mémoire partagé pour a gestion des Feux
-	sharedMemory = shmget(publickey,1024,0770|IPC_CREAT);
-	int * data =(int*) shmat(sharedMemory,(void*)0,0);
+	sharedMemory = shmget(publickey,4*sizeof(int),0770|IPC_CREAT);
+	//int * data =(int*) shmat(sharedMemory,(void*)0,0);
 
 	//Création de la tache Heure
 	pidHeure = CreerEtActiverHeure();
@@ -110,7 +110,7 @@ int main (void) {
 	// TODO : completer la création des feux si c'est pas bon
 	if((pid_feu=fork())==0)
 	{// Fille
-		Feu(data);
+		Feu(sharedMemory, semFeux);
 	}
 	else
 	{
@@ -177,13 +177,13 @@ void terminer()
 	kill( pidHeure , SIGUSR2);
 	waitpid(pidHeure, 0, 0);
 
-	//Destuction du sémaphore pour la mémoire memFeux
-	semctl(semFeux, 0, IPC_RMID, 0);
-
 	//Destruction de la file de Messages
 	msgctl(fileVoitures, IPC_RMID, 0);
 
 	// destruction de la memoire partagée
 	shmctl(sharedMemory,IPC_RMID,0);
+
+	//Destuction du sémaphore pour la mémoire memFeux
+	semctl(semFeux, 0, IPC_RMID, 0);
 	TerminerApplication();
 }

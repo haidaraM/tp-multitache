@@ -31,7 +31,7 @@
 // Contrat :
 //
 
-void Feu(int * ptrSharedMemory);
+void Feu(int SharedMemory, int semFeux);
 
 #endif // FEU_H
 
