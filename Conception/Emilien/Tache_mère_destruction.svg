@@ -51,11 +51,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.437907"
-     inkscape:cx="660.98962"
-     inkscape:cy="868.12057"
+     inkscape:zoom="1.0167538"
+     inkscape:cx="382.88849"
+     inkscape:cy="812.72762"
      inkscape:document-units="px"
-     inkscape:current-layer="layer4"
+     inkscape:current-layer="layer5"
      showgrid="false"
      inkscape:window-width="1366"
      inkscape:window-height="721"
@@ -263,7 +263,32 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Action - 123"
-     style="display:inline" />
+     style="display:inline">
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="220.30899"
+       y="234.07166"
+       id="text3162"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3164"
+         x="220.30899"
+         y="234.07166"
+         style="font-weight:bold;-inkscape-font-specification:Sans Bold">SIGUSR2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="205.55617"
+       y="316.68753"
+       id="text3166"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3168"
+         x="205.55617"
+         y="316.68753"
+         style="font-weight:bold;-inkscape-font-specification:Sans Bold">SIGUSR2</tspan></text>
+  </g>
   <g
      inkscape:groupmode="layer"
      id="layer5"
@@ -286,7 +311,7 @@
          sodipodi:role="line"
          id="tspan3879"
          x="285.87085"
-         y="106.26077">Fin</tspan></text>
+         y="106.26077">Terminer</tspan></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3787-1"
@@ -337,6 +362,30 @@
        height="768.6955"
        x="339.11725"
        y="133.24931" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="346.19983"
+       y="265.54434"
+       id="text3179"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3181"
+         x="346.19983"
+         y="265.54434"
+         style="font-weight:bold;-inkscape-font-specification:Sans Bold">SIGUSR2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       x="352.22189"
+       y="359.41306"
+       id="text3179-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3181-2"
+         x="352.22189"
+         y="359.41306"
+         style="font-weight:bold;-inkscape-font-specification:Sans Bold">SIGUSR2</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -685,6 +734,17 @@
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        d="m 262.91513,409.18643 1.39212,-1.39211 -15.99828,-15.99829 -1.39212,1.39212 15.99828,15.99828 z"
        id="rect4260-8-1-5" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="397.34299"
+       y="493.72153"
+       id="text3208"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3210"
+         x="397.34299"
+         y="493.72153">shmctl() &amp; semctl()</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -694,15 +754,15 @@
     <text
        xml:space="preserve"
        style="font-size:27.23443985px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
-       x="398.10544"
-       y="496.72171"
+       x="452.32108"
+       y="672.66174"
        id="text4428"
        sodipodi:linespacing="125%"
        transform="scale(1.0340331,0.96708703)"><tspan
          sodipodi:role="line"
          id="tspan4430"
-         x="398.10544"
-         y="496.72171"
+         x="452.32108"
+         y="672.66174"
          style="font-size:9.53205395px;font-weight:bold;-inkscape-font-specification:Sans Bold">etatFeux</tspan></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.06886411;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
@@ -882,6 +942,17 @@
          id="tspan3180"
          x="221.78427"
          y="396.84457">x4</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="406.1947"
+       y="683.54132"
+       id="text3213"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3215"
+         x="406.1947"
+         y="683.54132">terminerApplication()</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -940,6 +1011,17 @@
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        d="m 382.75688,383.46292 1.39212,-1.39211 -15.99828,-15.99829 -1.39212,1.39212 15.99828,15.99828 z"
        id="rect4260-8-5" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="230.14423"
+       y="370.78125"
+       id="text3204"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3206"
+         x="230.14423"
+         y="370.78125">msgctl()</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"

@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.0000001"
-     inkscape:cx="98.475719"
-     inkscape:cy="306.34499"
+     inkscape:zoom="0.70710682"
+     inkscape:cx="180.10168"
+     inkscape:cy="511.47796"
      inkscape:document-units="px"
-     inkscape:current-layer="layer6"
+     inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1366"
      inkscape:window-height="721"
@@ -119,12 +119,12 @@
          y="617.67877"
          style="font-size:14px;font-weight:bold;-inkscape-font-specification:Sans Bold">EtatFeux</tspan></text>
     <rect
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.70408654;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3133"
-       width="138"
-       height="1"
-       x="175"
-       y="701.36218" />
+       width="202.84973"
+       height="0.7959134"
+       x="175.10205"
+       y="701.46423" />
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        id="rect3814-1-2-2"
@@ -167,7 +167,11 @@
          sodipodi:role="line"
          id="tspan3164"
          x="178.89801"
-         y="674.76715">Tempo des feux</tspan></text>
+         y="674.76715">Lecture </tspan><tspan
+         sodipodi:role="line"
+         x="178.89801"
+         y="689.76715"
+         id="tspan3112">Tempo des feux</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -183,21 +187,6 @@
          x="388.2016"
          y="414.70264"
          id="tspan3913">d'état</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="310.41986"
-       y="643.65448"
-       id="text3915"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3917"
-         x="310.41986"
-         y="643.65448">Passage à </tspan><tspan
-         sodipodi:role="line"
-         x="310.41986"
-         y="658.65448"
-         id="tspan3919">l'orange</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -663,7 +652,8 @@
          sodipodi:role="line"
          id="tspan3804"
          x="162.63457"
-         y="569.40826">Mise à jour via Afficher()</tspan></text>
+         y="569.40826"
+         style="font-weight:bold;-inkscape-font-specification:Sans Bold">Afficher()</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -835,7 +825,7 @@
          sodipodi:role="line"
          id="tspan3266-0"
          x="99.551315"
-         y="280.6778">Fin</tspan></text>
+         y="280.6778">fin_tache</tspan></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3606"
@@ -903,15 +893,20 @@
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="492.14633"
-       y="441.42191"
+       x="435.57779"
+       y="432.93661"
        id="text3716"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3718"
-         x="492.14633"
-         y="441.42191"
-         style="font-size:12px;font-weight:bold;-inkscape-font-specification:Sans Bold">Etat des feux</tspan></text>
+         x="435.57779"
+         y="432.93661"
+         style="font-size:12px;font-weight:bold;-inkscape-font-specification:Sans Bold">Écriture </tspan><tspan
+         sodipodi:role="line"
+         x="435.57779"
+         y="447.93661"
+         style="font-size:12px;font-weight:bold;-inkscape-font-specification:Sans Bold"
+         id="tspan3114">Etat des feux</tspan></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3808"
@@ -920,43 +915,12 @@
        x="381.13055"
        y="420.91583" />
     <rect
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3064"
-       width="65.760925"
-       height="1.4142135"
-       x="313.24829"
-       y="662.74634" />
-    <rect
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3066"
-       width="65.053825"
-       height="0.70710677"
-       x="313.95541"
-       y="756.08447" />
-    <rect
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.52866101;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3068"
-       width="1.3855525"
-       height="93.773888"
-       x="311.84842"
-       y="662.79614" />
-    <rect
        style="fill:#a1b5ff;fill-opacity:1;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        id="rect3092"
        width="13.435028"
        height="13.435028"
        x="560.91492"
        y="21.91494"
-       transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)"
-       inkscape:transform-center-x="181.72644"
-       inkscape:transform-center-y="-148.49242" />
-    <rect
-       style="fill:#a1b5ff;fill-opacity:1;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       id="rect3092-1"
-       width="13.435028"
-       height="13.435028"
-       x="732.41492"
-       y="192.41493"
        transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)"
        inkscape:transform-center-x="181.72644"
        inkscape:transform-center-y="-148.49242" />

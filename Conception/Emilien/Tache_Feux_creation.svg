@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="434.82302"
-     inkscape:cy="752.91564"
+     inkscape:zoom="0.7071068"
+     inkscape:cx="514.03762"
+     inkscape:cy="532.37265"
      inkscape:document-units="px"
      inkscape:current-layer="layer4"
      showgrid="false"
@@ -84,7 +84,7 @@
          sodipodi:role="line"
          id="tspan2997"
          x="222.23357"
-         y="157.36703">Feux</tspan></text>
+         y="157.36703">Feu</tspan></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2999"
@@ -221,7 +221,7 @@
          sodipodi:role="line"
          id="tspan3266"
          x="573.73523"
-         y="128.65875">Masquage</tspan></text>
+         y="128.65875">SIG_IGN</tspan></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.49642634;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3289"
@@ -331,7 +331,7 @@
          sodipodi:role="line"
          id="tspan3266-0"
          x="99.551315"
-         y="280.6778">Fin</tspan></text>
+         y="280.6778">fin_tache</tspan></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.49308062;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3423"
@@ -429,6 +429,29 @@
        height="1.4142135"
        x="369.10974"
        y="664.86768" />
+    <rect
+       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3062"
+       width="212.13203"
+       height="1.4142135"
+       x="380.42343"
+       y="513.54681" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="388.90869"
+       y="483.84836"
+       id="text3064"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3066"
+         x="388.90869"
+         y="483.84836">Attachement à la mémoire </tspan><tspan
+         sodipodi:role="line"
+         x="388.90869"
+         y="498.84836"
+         id="tspan3068"
+         style="font-weight:bold;-inkscape-font-specification:Sans Bold">shmat()</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -437,15 +460,15 @@
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="553.42181"
-       y="486.39307"
+       x="624.13251"
+       y="487.80728"
        id="text4428"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4430"
-         x="553.42181"
-         y="486.39307"
-         style="font-size:14px;font-weight:bold;-inkscape-font-specification:Sans Bold">EtatFeux</tspan></text>
+         x="624.13251"
+         y="487.80728"
+         style="font-size:14px;font-weight:bold;-inkscape-font-specification:Sans Bold">etatFeux</tspan></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3574"
@@ -601,13 +624,43 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="405.8793"
-       y="549.60925"
+       x="401.63666"
+       y="539.70978"
        id="text3058"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3060"
-         x="405.8793"
-         y="549.60925">écriture des temps par défaut</tspan></text>
+         x="401.63666"
+         y="539.70978">écriture des temps par défaut</tspan><tspan
+         sodipodi:role="line"
+         x="401.63666"
+         y="554.70978"
+         id="tspan3063">et des états des Feux</tspan><tspan
+         sodipodi:role="line"
+         x="401.63666"
+         y="569.70978"
+         id="tspan3061" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="230.5168"
+       y="316.97116"
+       id="text3070"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3072"
+         x="230.5168"
+         y="316.97116">Création du handler</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="213.54625"
+       y="425.8656"
+       id="text3074"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3076"
+         x="213.54625"
+         y="425.8656">Positionnement du handler</tspan></text>
   </g>
 </svg>
