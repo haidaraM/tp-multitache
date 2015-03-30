@@ -113,6 +113,7 @@ void Commande ( TypeVoie entree, TypeVoie sortie )
     Afficher(NUMERO,numero_voiture,GRAS);
     Afficher(ENTREE,entree, GRAS);
     Afficher(SORTIE,sortie, GRAS);
+    OperationVoie(PLUS,entree);
     int resultat;
     do{
         resultat = msgsnd(file_voitures,&msgVoiture,TAILLE_MSG_VOITURE,IPC_NOWAIT);

@@ -122,7 +122,7 @@ void moteur()
         TypeVoie entree = nouvelleCaisse.uneVoiture.entree;
         TypeVoie sortie = nouvelleCaisse.uneVoiture.sortie;
         DessinerVoitureFeu(num,entree ,sortie);
-
+        OperationVoie(MOINS,entree);
         semop(semaphore_feu,&reserver,1);
         int * data =(int*) shmat(shared_memory_id,(void*)0,SHM_RDONLY);
 
@@ -148,7 +148,7 @@ void moteur()
 
         pid_t voiture = DeplacerVoiture(num,entree,sortie);
         les_deplacements.push_back(voiture);
-
+        shmdt(data);
         semop(shared_memory_id,&liberer,1);
 
     }

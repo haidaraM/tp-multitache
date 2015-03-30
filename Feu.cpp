@@ -77,7 +77,7 @@ static void initialisation(int mem, int semFeux)
     Effacer(COULEUR_AXE_NS);
     Afficher(COULEUR_AXE_NS, "Vert");
     Effacer(COULEUR_AXE_EO);
-    Afficher(COULEUR_AXE_EO, "Rouge");
+    Afficher(COULEUR_AXE_EO, "Rouge", GRAS,INVERSE);
 }
 
 static void moteur(int semFeux)
@@ -97,7 +97,7 @@ static void moteur(int semFeux)
                     etatNS = ORANGE;
                     tempsNS = 3;
                     Effacer (COULEUR_AXE_NS);
-                    Afficher(COULEUR_AXE_NS, "Orange");
+                    Afficher(COULEUR_AXE_NS, "Orange",GRAS,INVERSE);
                     break;
                 case ORANGE:
                     semop (semFeux, &reserver, 0);
@@ -108,7 +108,7 @@ static void moteur(int semFeux)
                     //7= 2s de rouge + 3s de orange + 2s de rouge en commun
                     //Mise à jour de l'affichage 
                     Effacer(COULEUR_AXE_NS);
-                    Afficher(COULEUR_AXE_NS, "Rouge");
+                    Afficher(COULEUR_AXE_NS, "Rouge",GRAS,INVERSE);
                     break;
                 case ROUGE:
                     semop (semFeux, &reserver, 0);
@@ -132,7 +132,7 @@ static void moteur(int semFeux)
                     etatEO = ORANGE;
                     tempsEO = 3;
                     Effacer (COULEUR_AXE_EO);
-                    Afficher(COULEUR_AXE_EO, "Orange");
+                    Afficher(COULEUR_AXE_EO, "Orange",GRAS,INVERSE);
                     break;
                 case ORANGE:
                     semop (semFeux, &reserver, 0);
@@ -141,7 +141,7 @@ static void moteur(int semFeux)
                     etatEO = ROUGE;
                     tempsEO = dureeNS + 7;
                     Effacer(COULEUR_AXE_EO);
-                    Afficher(COULEUR_AXE_EO, "Rouge");
+                    Afficher(COULEUR_AXE_EO, "Rouge",GRAS,INVERSE);
                     break;
                 case ROUGE:
                     semop (semFeux, &reserver, 0);
