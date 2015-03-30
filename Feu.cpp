@@ -48,6 +48,7 @@ int * memoire_partagee;
 
 static void fin_tache(int numerosignal)
 {
+    shmdt(NULL);
     exit(0);
 }
 
@@ -82,10 +83,9 @@ static void moteur(int semFeux)
     struct sembuf liberer = {0, 1, 0};
     for(;;)
     {
-        if (tempsNS==0)
+        if (tempsNS<=0)
         {
             switch(etatNS){
-                case VERT:
                     semop (semFeux, &reserver, 0);
                     memoire_partagee[INDICE_ETAT_FEU_NS] = ORANGE;
                     semop (semFeux, &liberer, 0);
@@ -115,7 +115,7 @@ static void moteur(int semFeux)
             }
         }
 
-        if (tempsEO==0)
+        if (tempsEO<=0)
         {
             switch(etatEO){
                 case VERT:

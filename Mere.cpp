@@ -36,7 +36,7 @@
 
 //---------------------------------------------------- Variables statiques
 static pid_t les_voies[NB_VOIES];
-static int sharedMemory;
+static int etatFeux;
 static int semFeux;
 static int fileVoitures;
 static pid_t pid_feu;
@@ -100,7 +100,7 @@ int main (void) {
 	semFeux = semget(publickey, 1, IPC_CREAT);
 
 	//Création du fragment de mémoire partagé pour a gestion des Feux
-	sharedMemory = shmget(publickey,4*sizeof(int),0770|IPC_CREAT);
+	etatFeux = shmget(publickey,4*sizeof(int),0770|IPC_CREAT);
 
 	//Création de la tache Heure
 	pidHeure = CreerEtActiverHeure();
@@ -111,7 +111,7 @@ int main (void) {
 	// TODO : completer la création des feux si c'est pas bon
 	if((pid_feu=fork())==0)
 	{// Fille
-		Feu(sharedMemory, semFeux);
+		Feu(etatFeux, semFeux);
 	}
 	else
 	{ // mere
@@ -120,12 +120,12 @@ int main (void) {
 			les_voies[i] = fork();
 			if(les_voies[i] == 0)
 			{// fille
-				Voie(fileVoitures,semFeux,sharedMemory,(TypeVoie)(i+1));
+				Voie(fileVoitures,semFeux,etatFeux,(TypeVoie)(i+1));
 			}
 		}
 		if ((pidMenu = fork()) == 0)
 		{// Fille
-			GestionMenu(pidGenerateur, fileVoitures, sharedMemory);
+			GestionMenu(pidGenerateur, fileVoitures, etatFeux);
 		}
 		else
 		{// mere
@@ -160,7 +160,7 @@ void terminer()
 	msgctl(fileVoitures, IPC_RMID, 0);
 
 	// destruction de la memoire partagée
-	shmctl(sharedMemory,IPC_RMID,0);
+	shmctl(etatFeux,IPC_RMID,0);
 
 	//Destuction du sémaphore pour la mémoire memFeux
 	semctl(semFeux, 0, IPC_RMID, 0);

@@ -51,11 +51,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.0335076"
-     inkscape:cx="239.97511"
-     inkscape:cy="609.53797"
+     inkscape:zoom="1.437907"
+     inkscape:cx="660.98962"
+     inkscape:cy="868.12057"
      inkscape:document-units="px"
-     inkscape:current-layer="layer9"
+     inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1366"
      inkscape:window-height="721"
@@ -78,78 +78,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Signaux"
-     style="display:inline;filter:url(#filter4121)">
-    <rect
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:1.56100619;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3769"
-       width="51.009747"
-       height="120.42956"
-       x="672.55109"
-       y="72.300278" />
-    <rect
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:1.39289153;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3787"
-       width="26.166376"
-       height="0.64152205"
-       x="631.7677"
-       y="81.834816" />
-    <rect
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:1.41171324;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3789"
-       width="51.151878"
-       height="0.62175667"
-       x="646.89502"
-       y="95.958199" />
-    <rect
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:1.39289153;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3791"
-       width="0.58147502"
-       height="84.680908"
-       x="698.05597"
-       y="95.948318" />
-    <rect
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:0.9292326;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3793"
-       width="15.514922"
-       height="0.40662196"
-       x="413.17154"
-       y="555.64124"
-       transform="matrix(0.65200045,-0.75821858,0.67841264,0.73468108,0,0)" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="path3795"
-       sodipodi:cx="500.96826"
-       sodipodi:cy="111.81348"
-       sodipodi:rx="12.058316"
-       sodipodi:ry="12.058316"
-       d="m 513.02658,111.81348 a 12.058316,12.058316 0 1 1 -24.11663,0 12.058316,12.058316 0 1 1 24.11663,0 z"
-       transform="matrix(0.53044094,0,0,0.58521787,362.54483,21.531731)" />
-    <text
-       xml:space="preserve"
-       style="font-size:8.3573494px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       x="656.86835"
-       y="84.629234"
-       id="text3797"
-       sodipodi:linespacing="125%"
-       transform="scale(0.95204994,1.0503651)"><tspan
-         sodipodi:role="line"
-         id="tspan3799"
-         x="656.86835"
-         y="84.629234">S</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:7.80019283px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       x="704.6582"
-       y="65.429626"
-       id="text4254"
-       sodipodi:linespacing="125%"
-       transform="scale(0.95204994,1.0503651)"><tspan
-         sodipodi:role="line"
-         id="tspan4256"
-         x="704.6582"
-         y="65.429626">Masquage</tspan></text>
-  </g>
+     style="display:inline;filter:url(#filter4121)" />
   <g
      inkscape:label="Tache"
      inkscape:groupmode="layer"
@@ -334,50 +263,7 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Action - 123"
-     style="display:inline">
-    <rect
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:0.96241891;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3839"
-       width="89.83284"
-       height="0.48768136"
-       x="583.1311"
-       y="128.56799" />
-    <path
-       sodipodi:type="star"
-       style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="path3843"
-       sodipodi:sides="3"
-       sodipodi:cx="528.37354"
-       sodipodi:cy="218.1459"
-       sodipodi:r1="8.7696848"
-       sodipodi:r2="4.3848424"
-       sodipodi:arg1="1.5707963"
-       sodipodi:arg2="2.6179939"
-       inkscape:flatsided="true"
-       inkscape:rounded="0"
-       inkscape:randomized="0"
-       d="m 528.37354,226.91559 -7.59477,-13.15453 15.18953,0 z"
-       transform="matrix(0,-0.39842994,0.41311658,0,559.7219,339.33167)"
-       inkscape:transform-center-x="-0.90573546" />
-    <text
-       xml:space="preserve"
-       style="font-size:16.22827148px;font-style:normal;font-weight:normal;line-height:100%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="622.40906"
-       y="147.28592"
-       id="text3801-7"
-       sodipodi:linespacing="100%"
-       transform="scale(1.0182638,0.98206376)"><tspan
-         sodipodi:role="line"
-         id="tspan3803-6"
-         x="622.40906"
-         y="147.28592"
-         style="font-size:12px;font-weight:bold;line-height:100%;-inkscape-font-specification:Sans Bold">SIGINT</tspan><tspan
-         sodipodi:role="line"
-         x="622.40906"
-         y="159.28592"
-         style="font-size:12px;font-weight:bold;line-height:100%;-inkscape-font-specification:Sans Bold"
-         id="tspan3807-2">SIGCHLD</tspan></text>
-  </g>
+     style="display:inline" />
   <g
      inkscape:groupmode="layer"
      id="layer5"
@@ -777,7 +663,11 @@
          sodipodi:role="line"
          id="tspan4305"
          x="136.04036"
-         y="364.12814">VoituresCrees</tspan></text>
+         y="364.12814">fileVoitures</tspan><tspan
+         sodipodi:role="line"
+         x="136.04036"
+         y="377.76822"
+         id="tspan3176" /></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.04851913;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect4404"
@@ -813,7 +703,7 @@
          id="tspan4430"
          x="398.10544"
          y="496.72171"
-         style="font-size:9.53205395px;font-weight:bold;-inkscape-font-specification:Sans Bold">EtatFeux</tspan></text>
+         style="font-size:9.53205395px;font-weight:bold;-inkscape-font-specification:Sans Bold">etatFeux</tspan></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:2.06886411;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        id="rect4046-1-5"
@@ -944,7 +834,7 @@
          sodipodi:role="line"
          id="tspan3171"
          x="421.6665"
-         y="610.28406">EtatNS</tspan></text>
+         y="610.28406">etatNS</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:9.09304237px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -956,7 +846,7 @@
          sodipodi:role="line"
          x="459.98312"
          y="610.24042"
-         id="tspan3194">EtatEO</tspan></text>
+         id="tspan3194">etatEO</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:8.335289px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -968,7 +858,7 @@
          sodipodi:role="line"
          id="tspan3200"
          x="417.94016"
-         y="648.66541">TempsNS</tspan></text>
+         y="648.66541">tempsNS</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:8.335289px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -980,7 +870,7 @@
          sodipodi:role="line"
          id="tspan3200-8"
          x="457.64041"
-         y="648.65588">TempsEO</tspan></text>
+         y="648.65588">tempsEO</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
@@ -1323,7 +1213,7 @@
          sodipodi:role="line"
          x="416.44492"
          y="248.06935"
-         id="tspan4684">Feux</tspan></text>
+         id="tspan4684">Feu</tspan></text>
     <rect
        style="fill:#0000ff;fill-opacity:0.18348622;stroke:#000000;stroke-width:1.95247829;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        id="rect3812-0-1-0"
