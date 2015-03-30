@@ -17,11 +17,14 @@
 #include <stdlib.h>
 #include <sys/msg.h>
 #include <errno.h>
+#include <sys/sem.h>
+#include <sys/shm.h>
 
 using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Voie.h"
 #include "Voiture.h"
+#include "Constantes.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -106,6 +109,8 @@ void moteur()
     // TODO : Mettre à jour la liste des voitures en attente
     // TODO : lecture de la mémoire partagée pour l'etat des feux
     int res;
+    struct sembuf reserver = {0, -1, 0};
+    struct sembuf liberer = {0, 1, 0};
     for(;;)
     {
         MsgVoiture nouvelleCaisse;
@@ -116,10 +121,35 @@ void moteur()
         unsigned int num = nouvelleCaisse.uneVoiture.numero;
         TypeVoie entree = nouvelleCaisse.uneVoiture.entree;
         TypeVoie sortie = nouvelleCaisse.uneVoiture.sortie;
-        DessinerVoitureFeu(num,entree,sortie);
+        DessinerVoitureFeu(num,entree ,sortie);
+
+        semop(semaphore_feu,&reserver,1);
+        int * data =(int*) shmat(shared_memory_id,(void*)0,SHM_RDONLY);
+
+        switch(entree)
+        {
+            case NORD:
+            case SUD:
+                while(data[INDICE_ETAT_FEU_NS] == ORANGE || data[INDICE_ETAT_FEU_NS] == ROUGE)
+                {
+                    sleep(1);
+                }
+                break;
+            case EST:
+            case OUEST:
+                while(data[INDICE_ETAT_FEU_EO] == ORANGE || data[INDICE_ETAT_FEU_EO] == ROUGE)
+                {
+                    sleep(1);
+                }
+                break;
+            default:
+                break;
+        }
+
         pid_t voiture = DeplacerVoiture(num,entree,sortie);
         les_deplacements.push_back(voiture);
 
+        semop(shared_memory_id,&liberer,1);
 
     }
 }

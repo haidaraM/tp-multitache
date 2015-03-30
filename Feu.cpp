@@ -60,10 +60,10 @@ static void initialisation(int mem, int semFeux)
     sigemptyset(&action.sa_mask);
     action.sa_handler = fin_tache;
     sigaction(SIGUSR2, &action, NULL);
-    memoire_partagee[0]= VERT;
-    memoire_partagee[1] = ROUGE;
-    memoire_partagee[2] = DUREE_INIT_NS;
-    memoire_partagee[3] = DUREE_INIT_EO;
+    memoire_partagee[INDICE_ETAT_FEU_NS]= VERT;
+    memoire_partagee[INDICE_ETAT_FEU_EO] = ROUGE;
+    memoire_partagee[INDICE_TEMPS_NS] = DUREE_INIT_NS;
+    memoire_partagee[INDICE_TEMPS_EO] = DUREE_INIT_EO;
     dureeNS = DUREE_INIT_NS;
     dureeEO = DUREE_INIT_EO;
     etatNS = VERT;
@@ -87,7 +87,7 @@ static void moteur(int semFeux)
             switch(etatNS){
                 case VERT:
                     semop (semFeux, &reserver, 0);
-                    memoire_partagee[0] = ORANGE;
+                    memoire_partagee[INDICE_ETAT_FEU_NS] = ORANGE;
                     semop (semFeux, &liberer, 0);
                     etatNS = ORANGE;
                     tempsNS = 3;
@@ -96,7 +96,7 @@ static void moteur(int semFeux)
                     break;
                 case ORANGE:
                     semop (semFeux, &reserver, 0);
-                    memoire_partagee[0] = ROUGE;
+                    memoire_partagee[INDICE_ETAT_FEU_NS] = ROUGE;
                     semop (semFeux, &liberer, 0);
                     etatNS = ROUGE;
                     tempsNS = dureeEO + 7;
@@ -105,7 +105,7 @@ static void moteur(int semFeux)
                     break;
                 case ROUGE:
                     semop (semFeux, &reserver, 0);
-                    memoire_partagee[0] = VERT;
+                    memoire_partagee[INDICE_ETAT_FEU_NS] = VERT;
                     semop (semFeux, &liberer, 0);
                     etatNS = VERT;
                     tempsNS = dureeNS;
@@ -120,7 +120,7 @@ static void moteur(int semFeux)
             switch(etatEO){
                 case VERT:
                     semop (semFeux, &reserver, 0);
-                    memoire_partagee[1] = ORANGE;
+                    memoire_partagee[INDICE_ETAT_FEU_EO] = ORANGE;
                     semop (semFeux, &liberer, 0);
                     etatEO = ORANGE;
                     tempsEO = 3;
@@ -129,7 +129,7 @@ static void moteur(int semFeux)
                     break;
                 case ORANGE:
                     semop (semFeux, &reserver, 0);
-                    memoire_partagee[1] = ROUGE;
+                    memoire_partagee[INDICE_ETAT_FEU_EO] = ROUGE;
                     semop (semFeux, &liberer, 0);
                     etatEO = ROUGE;
                     tempsEO = dureeNS + 7;
@@ -150,8 +150,8 @@ static void moteur(int semFeux)
         Afficher(TEMPS_AXE_NS, tempsNS--);
         Afficher(TEMPS_AXE_EO, tempsEO--);
         semop (semFeux, &reserver, 0);
-        dureeNS = memoire_partagee[2];
-        dureeEO = memoire_partagee[3];
+        dureeNS = memoire_partagee[INDICE_TEMPS_NS];
+        dureeEO = memoire_partagee[INDICE_TEMPS_EO];
         semop (semFeux, &liberer, 0);
         Effacer(DUREE_AXE_NS);
         Afficher(DUREE_AXE_NS, dureeNS);
