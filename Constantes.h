@@ -29,8 +29,11 @@ const int INDICE_TEMPS_NS = 2;
 const int INDICE_TEMPS_EO = 3;
 
 // Temps par défaut des feux
-const int TEMPS_FEU_NS = 20;
-const int TEMPS_FEU_EO = 10;
+const int DUREE_INIT_NS = 20;
+const int DUREE_INIT_EO = 10;
+const int ROUGE = 0;
+const int ORANGE = 1;
+const int VERT = 2;
 
 // Informations pour les voies
 const unsigned int NB_VOIES = 4;

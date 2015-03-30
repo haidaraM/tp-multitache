@@ -101,18 +101,6 @@ int main (void) {
 
 	//Création du fragment de mémoire partagé pour a gestion des Feux
 	sharedMemory = shmget(publickey,4*sizeof(int),0770|IPC_CREAT);
-	//int * data =(int*) shmat(sharedMemory,(void*)0,0);
-	sharedMemory = shmget(publickey,sizeof(int)*4,0770|IPC_CREAT);
-	// on s'attache
-	int * data =(int*) shmat(sharedMemory,(void*)0,0);
-
-	// initialisation des la duree des feux
-	// TODO : peut etre mettre ça dans la tache feu
-	data[INDICE_TEMPS_NS]=TEMPS_FEU_NS;
-	data[INDICE_TEMPS_EO]=TEMPS_FEU_EO;
-
-	// on se detache
-	shmdt(data);
 
 	//Création de la tache Heure
 	pidHeure = CreerEtActiverHeure();
@@ -127,7 +115,7 @@ int main (void) {
 	}
 	else
 	{ // mere
-		for (int i = 0; i < NB_VOIES; ++i)
+		for (unsigned int i = 0; i < NB_VOIES; ++i)
 		{
 			les_voies[i] = fork();
 			if(les_voies[i] == 0)

@@ -19,14 +19,11 @@
 //------------------------------------------------------ Include personnel
 #include "Feu.h"
 #include "Outils.h"
+#include "Constantes.h"
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
-const int DUREE_INIT_NS = 20;
-const int DUREE_INIT_EO = 10;
-const int ROUGE = 0;
-const int ORANGE = 1;
-const int VERT = 2;
+
 //------------------------------------------------------------------ Types
 
 
@@ -61,7 +58,7 @@ static void initialisation(int mem, int semFeux)
 
     struct sigaction action;
     sigemptyset(&action.sa_mask);
-    action.sa_handler=fin_tache;
+    action.sa_handler = fin_tache;
     sigaction(SIGUSR2, &action, NULL);
     memoire_partagee[0]= VERT;
     memoire_partagee[1] = ROUGE;
@@ -152,7 +149,7 @@ static void moteur(int semFeux)
         }
         Afficher(TEMPS_AXE_NS, tempsNS--);
         Afficher(TEMPS_AXE_EO, tempsEO--);
-        semop (semFeux, &liberer, 0);
+        semop (semFeux, &reserver, 0);
         dureeNS = memoire_partagee[2];
         dureeEO = memoire_partagee[3];
         semop (semFeux, &liberer, 0);

@@ -16,6 +16,7 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <sys/msg.h>
+#include <errno.h>
 
 using namespace std;
 //------------------------------------------------------ Include personnel
@@ -94,6 +95,7 @@ static void initialisation(int fileVoitures,int sem,int shmid, TypeVoie typeVoie
     sigemptyset(&fin_fils.sa_mask);
 
     // Armement des handler
+
     sigaction(SIGUSR2,&fin_tache, NULL);
     sigaction(SIGCHLD, &fin_fils, NULL);
 }
@@ -103,19 +105,21 @@ void moteur()
 {
     // TODO : Mettre à jour la liste des voitures en attente
     // TODO : lecture de la mémoire partagée pour l'etat des feux
+    int res;
     for(;;)
     {
         MsgVoiture nouvelleCaisse;
-        int res = (int) msgrcv(file_voitures,&nouvelleCaisse,TAILLE_MSG_VOITURE,type_voie,0);
-        if(res != -1)
-        {
-            unsigned int num = nouvelleCaisse.uneVoiture.numero;
-            TypeVoie entree = nouvelleCaisse.uneVoiture.entree;
-            TypeVoie sortie = nouvelleCaisse.uneVoiture.sortie;
-            DessinerVoitureFeu(num,entree,sortie);
-            pid_t voiture = DeplacerVoiture(num,entree,sortie);
-            les_deplacements.push_back(voiture);
-        }
+        do{
+             res = (int) msgrcv(file_voitures,&nouvelleCaisse,TAILLE_MSG_VOITURE,type_voie,0);
+        } while(res == -1 && errno == EINTR);
+
+        unsigned int num = nouvelleCaisse.uneVoiture.numero;
+        TypeVoie entree = nouvelleCaisse.uneVoiture.entree;
+        TypeVoie sortie = nouvelleCaisse.uneVoiture.sortie;
+        DessinerVoitureFeu(num,entree,sortie);
+        pid_t voiture = DeplacerVoiture(num,entree,sortie);
+        les_deplacements.push_back(voiture);
+
 
     }
 }
