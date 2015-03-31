@@ -12,8 +12,8 @@
 
 //------------------------------------------------------------------------
 // Rôle de la tâche <GestionMenu>
-// Cette tache gère le menu et le clavier
-//
+// Cette tache gère le menu et le clavier. Elle joue le rôle d'interface avec
+// l'utilisateur
 //------------------------------------------------------------------------
 
 /////////////////////////////////////////////////////////////////  INCLUDE
