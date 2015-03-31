@@ -113,7 +113,7 @@ void Commande ( char code )
 void Commande ( TypeVoie entree, TypeVoie sortie )
 {
 
-    numero_voiture = (numero_voiture % 200) + 1;
+    numero_voiture = (numero_voiture % 199) + 1;
     Voiture voiture = {entree, sortie, numero_voiture};
     MsgVoiture msgVoiture = {entree,voiture};
     // Affichage de la dernière voiture

@@ -59,11 +59,12 @@ static int * data;
 // tue.
 static void finTache(int numero_signal)
 {
-    // Masque de SIGUSR2
+    // Masque de SIGCHLD
     struct sigaction action;
     action.sa_handler = SIG_IGN;
     sigemptyset(&action.sa_mask);
     sigaction(SIGCHLD, &action, NULL);
+
     list<pid_t>::iterator it ;
     for(it = les_deplacements.begin(); it != les_deplacements.end(); it++)
     {
