@@ -5,6 +5,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 #repetoire des includes et repertoires
 include_directories( /share/public/tp/tp-multitache/)
+include_directories(./lib_audio/inc)
 LINK_DIRECTORIES( /share/public/tp/tp-multitache/)
 
 
@@ -15,6 +16,8 @@ set(SOURCE_FILES GestionMenu.cpp
                  Voie.cpp
                  Feu.h
                  Feu.cpp
+                 Audio.h
+                 Audio.cpp
                  )
 add_executable(tp_multitache ${SOURCE_FILES})
 

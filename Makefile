@@ -13,16 +13,16 @@ BACKUP_DIR	= /share/public/tp/tp-multitache/Compte-Rendu/2015/4/B3425/
 
 
 #Librairies
-LIBS 		= -ltp -ltcl -lncurses
-INCLUDE		= -I/share/public/tp/tp-multitache/
+LIBS 		= -ltp -ltcl -lncurses -lfmodex64
+INCLUDE		= -I/share/public/tp/tp-multitache/ -I./lib_audio/inc
 
 
 # Options de compilation et editions de liens
 CPPFLAGS	= $(DEFINE) -Wall -ansi -ggdb -std=c++11
-EDLFLAGS	= -L/share/public/tp/tp-multitache/
+EDLFLAGS	= -L/share/public/tp/tp-multitache/ -L/./lib_audio/lib
 
 #Fichiers
-INTERFACES_FILES		= GestionMenu.h	Voie.h	Feu.h
+INTERFACES_FILES		= GestionMenu.h	Voie.h	Feu.h Audio.h
 INT 		            = $(addprefix $(SRC_DIR), $(INTERFACES_FILES))					# construit le chemin des sources
 OBJ			            = $(addprefix $(OBJ_DIR), $(INTERFACES_FILES:.h=.o))			# Génération du nom des fichiers obj
 MAIN_OBJ             	= Mere.o 											# .o du fichier ou se trouve le main
@@ -41,7 +41,9 @@ $(EXE_DIR)/$(EXE): $(OBJ) $(MAIN_OBJ)
 	
 
 #Mettre les dependances particulieres ici
-GestionMenu.o : GestionMenu.h 
+GestionMenu.o : GestionMenu.h Constantes.h
+
+Audio.o : Constantes.h
 
 #Generation des fichiers obj
 %.o:%.cpp

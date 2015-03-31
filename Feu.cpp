@@ -168,6 +168,14 @@ static void moteur()
         Effacer(DUREE_AXE_NS);
         Afficher(DUREE_AXE_NS, dureeNS);
         Afficher(DUREE_AXE_EO, dureeEO);
+
+        if((tempsNS == 2 && etatNS == ROUGE) || (tempsEO == 2 && etatEO == ROUGE))
+        {
+            semop (semaphore, &reserver, 1);
+            memoire_partagee[MEMOIRE_TIMER] = 1;
+            semop (semaphore, &liberer, 1);
+        }
+
         //On boucle toute les secondes
         sleep(1);
     }

@@ -34,7 +34,7 @@ Voiture.h
 Menu.h
 Outils.h
 Heure.h
-
+*.png
 # IDE
 .idea/
 *#

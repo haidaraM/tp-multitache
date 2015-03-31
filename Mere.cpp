@@ -27,7 +27,7 @@
 #include "Voie.h"
 #include "Feu.h"
 #include "Constantes.h"
-
+#include "Audio.h"
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
 
@@ -42,6 +42,7 @@ static pid_t pid_feu;
 static pid_t pidHeure;
 static pid_t pidGenerateur;
 static pid_t pidMenu;
+static pid_t pidAudio;
 
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
@@ -71,6 +72,7 @@ int main (void) {
 	sigaction(SIGCHLD, &action, NULL);// masquage du signal de mort d'un fils
 	sigaction(SIGUSR2, &action, NULL);// masquage de SIGUSR2
 
+
 	//Lancement de l'application
 	InitialiserApplication(XTERM);
 
@@ -81,13 +83,19 @@ int main (void) {
 	semFeux = semget(publickey, 1, 0770|IPC_CREAT);
 	semctl(semFeux,0,SETVAL,1);
 	//Création du fragment de mémoire partagé pour la gestion des Feux
-	etatFeux = shmget(publickey,4*sizeof(int),0770|IPC_CREAT);
+	etatFeux = shmget(publickey,8*sizeof(int),0770|IPC_CREAT);
 
 	//Création de la tache Heure
 	pidHeure = CreerEtActiverHeure();
 
 	//Création de la tache Générateur
 	pidGenerateur = CreerEtActiverGenerateur(0, fileVoitures);
+
+	// creation systeme audio
+	if((pidAudio =fork())==0)
+	{
+		Audio(etatFeux);
+	}
 
 	if((pid_feu=fork())==0)
 	{// Fille
@@ -111,6 +119,7 @@ int main (void) {
 		{// mere
 			waitpid(pidMenu, 0, 0);
 			terminer();
+
 			return 0;
 		}
 	}
@@ -135,6 +144,9 @@ void terminer()
 	//envoi de sigusr2 à heure : commande de kill
 	kill( pidHeure , SIGUSR2);
 	waitpid(pidHeure, 0, 0);
+
+	kill(pidAudio, SIGUSR2);
+	waitpid(pidAudio,0,0);
 
 	//Destruction de la file de Messages
 	msgctl(fileVoitures, IPC_RMID, 0);

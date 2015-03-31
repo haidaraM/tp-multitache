@@ -83,6 +83,13 @@ void GestionMenu(pid_t generateur, int fileVoitures, int shmid, int sem)
 
 void Commande ( char code )
 {
+    int * data =(int*) shmat(shared_memory_id,(void*)0,0);
+    struct sembuf reserver = {0, -1, 0};
+    struct sembuf liberer = {0, 1, 0};
+    semop(semaphore_feux,&reserver,1);
+    data[MEMOIRE_GENERATEUR] = 1;
+    semop(semaphore_feux,&liberer,1);
+    shmdt(data);
     switch (code)
     {
         case 'g':
@@ -112,6 +119,13 @@ void Commande ( char code )
 
 void Commande ( TypeVoie entree, TypeVoie sortie )
 {
+    int * data =(int*) shmat(shared_memory_id,(void*)0,0);
+    struct sembuf reserver = {0, -1, 0};
+    struct sembuf liberer = {0, 1, 0};
+    semop(semaphore_feux,&reserver,1);
+    data[MEMOIRE_CAR_STAR] = 1;
+    semop(semaphore_feux,&liberer,1);
+    shmdt(data);
 
     numero_voiture = (numero_voiture % 199) + 1;
     Voiture voiture = {entree, sortie, numero_voiture};
@@ -127,6 +141,7 @@ void Commande ( TypeVoie entree, TypeVoie sortie )
     do{
         resultat = msgsnd(file_voitures,&msgVoiture,TAILLE_MSG_VOITURE,IPC_NOWAIT);
     } while(resultat == -1 && errno == EINTR);
+
 } // ---- Fin de commande
 
 
@@ -139,6 +154,7 @@ void Commande ( TypeVoie voie, unsigned int duree )
     if(voie == NORD || voie == SUD)
     {
         semop(semaphore_feux,&reserver,1);
+        data[MEMOIRE_DUREE] = 1;
         data[INDICE_TEMPS_NS] = duree;
         semop(semaphore_feux,&liberer,1);
     }
@@ -146,6 +162,7 @@ void Commande ( TypeVoie voie, unsigned int duree )
     {
         semop(semaphore_feux,&reserver,1);
         data[INDICE_TEMPS_EO] = duree;
+        data[MEMOIRE_DUREE] = 1;
         semop(semaphore_feux,&liberer,1);
     }
     // detachement
