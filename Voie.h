@@ -1,5 +1,5 @@
 /*************************************************************************
-                           Voie  -  Gestion des differentes voies du carrefour
+                           Voie  -  Description
                              -------------------
     début                : 19/03/2014
     copyright            : (C) 2015 par Mohamed HAIDARA
@@ -12,7 +12,7 @@
 
 //------------------------------------------------------------------------
 // Rôle de la tâche <Voie>
-//
+// Cette tache gere l'arrivée des voitures sur le Carrefour
 //
 //------------------------------------------------------------------------
 

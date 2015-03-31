@@ -3,7 +3,7 @@
                              -------------------
     début                : 26/03/2015
     copyright            : (C) 2015 par Emilien
-    e-mail               : Feu
+    e-mail               : emilien.bai@insa-lyon.fr
 *************************************************************************/
 
 //---------- Interface de la tâche <Feu> (fichier Feu.h) -------
