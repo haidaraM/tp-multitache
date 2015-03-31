@@ -1,9 +1,9 @@
 /*************************************************************************
                            Constantes  -  description
                              -------------------
-    début                : Constantes
-    copyright            : (C) Constantes par Constantes
-    e-mail               : Constantes
+    début                : 25/03/2015
+    copyright            : (C) 2015 par Mohamed HAIDARA
+    e-mail               : mohamed.haidara@insa-lyon.fr
 *************************************************************************/
 
 //---------- Interface du module <Constantes> (fichier Constantes.h) ---------
@@ -12,7 +12,7 @@
 
 //------------------------------------------------------------------------
 // Rôle du module <Constantes>
-//
+// Cette interface quelques constantes qui sont utilisées par differents modules
 //
 //------------------------------------------------------------------------
 
@@ -37,10 +37,6 @@ const int VERT = 2;
 
 // Informations pour les voies
 const unsigned int NB_VOIES = 4;
-const unsigned int INDICE_VOIE_NORD = 0;
-const unsigned int INDICE_VOIE_SUD = 1;
-const unsigned int INDICE_VOIE_OUEST = 2;
-const unsigned int INDICE_VOIE_EST = 3;
 //------------------------------------------------------------------ Types
 
 

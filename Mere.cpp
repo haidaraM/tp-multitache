@@ -17,7 +17,6 @@
 #include <sys/msg.h>
 #include <sys/sem.h>
 #include <sys/shm.h>
-#include <errno.h>
 
 //------------------------------------------------------ Include personnel
 #include "Mere.h"
@@ -77,29 +76,11 @@ int main (void) {
 
 	//Création de la file de Message
 	fileVoitures = msgget(publickey, 0770 | IPC_CREAT);
-	if (errno == EACCES) {
-		Afficher(MESSAGE, "Erreur EACCES à la création de la file");
-	}
-	else if (errno == EEXIST) {
-		Afficher(MESSAGE, "Erreur EEXIST à la crétion de la file");
-	}
-	else if (errno == ENOENT) {
-		Afficher(MESSAGE, "Erreur ENOENT à la crétion de la file");
-	}
-	else if (errno == ENOMEM) {
-		Afficher(MESSAGE, "Erreur ENOMEM à la création de la file");
-	}
-	else if (errno == ENOSPC) {
-		Afficher(MESSAGE, "Erreur ENOSPC à la création de la file");
-	}
-	else {
-		//Afficher (MESSAGE, fileVoitures);
-	}
 
 	//Création du sémaphore de protection de la mémoire partagée
-	semFeux = semget(publickey, 1, IPC_CREAT);
-
-	//Création du fragment de mémoire partagé pour a gestion des Feux
+	semFeux = semget(publickey, 1, 0770|IPC_CREAT);
+	semctl(semFeux,0,SETVAL,1);
+	//Création du fragment de mémoire partagé pour la gestion des Feux
 	etatFeux = shmget(publickey,4*sizeof(int),0770|IPC_CREAT);
 
 	//Création de la tache Heure
@@ -108,7 +89,6 @@ int main (void) {
 	//Création de la tache Générateur
 	pidGenerateur = CreerEtActiverGenerateur(0, fileVoitures);
 
-	// TODO : completer la création des feux si c'est pas bon
 	if((pid_feu=fork())==0)
 	{// Fille
 		Feu(etatFeux, semFeux);
@@ -125,7 +105,7 @@ int main (void) {
 		}
 		if ((pidMenu = fork()) == 0)
 		{// Fille
-			GestionMenu(pidGenerateur, fileVoitures, etatFeux);
+			GestionMenu(pidGenerateur, fileVoitures, etatFeux, semFeux);
 		}
 		else
 		{// mere

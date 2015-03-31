@@ -1,9 +1,9 @@
 /*************************************************************************
-                           Feu  -  description
+                           Feu  -  Gestion des feux du carrefour
                              -------------------
-    début                : Feu
-    copyright            : (C) Feu par Feu
-    e-mail               : Feu
+    début                : 19/03/2015
+    copyright            : (C) 2015 par Bai Emilien
+    e-mail               : emilien.bai@insa-lyon.fr
 *************************************************************************/
 
 //---------- Réalisation de la tâche <Feu> (fichier Feu.cpp) ---
@@ -34,7 +34,8 @@ static int etatNS;
 static int etatEO;
 static int tempsNS;
 static int tempsEO;
-int * memoire_partagee;
+static int * memoire_partagee;
+static int semaphore;
 //------------------------------------------------------ Fonctions privées
 //static type nom ( liste de paramètres )
 // Mode d'emploi :
@@ -56,6 +57,7 @@ static void fin_tache(int numerosignal)
 static void initialisation(int mem, int semFeux)
 {
     memoire_partagee = (int*) shmat(mem, NULL, 0);
+    semaphore = semFeux;
     //Direction du handler de fin de tache
     struct sigaction action;
     sigemptyset(&action.sa_mask);
@@ -77,10 +79,10 @@ static void initialisation(int mem, int semFeux)
     Effacer(COULEUR_AXE_NS);
     Afficher(COULEUR_AXE_NS, "Vert");
     Effacer(COULEUR_AXE_EO);
-    Afficher(COULEUR_AXE_EO, "Rouge", GRAS,INVERSE);
+    Afficher(COULEUR_AXE_EO, "Rouge ", GRAS,INVERSE);
 }
 
-static void moteur(int semFeux)
+static void moteur()
 {
     struct sembuf reserver = {0, -1, 0};
     struct sembuf liberer = {0, 1, 0};
@@ -91,29 +93,29 @@ static void moteur(int semFeux)
         {
             switch(etatNS){
                 case VERT:
-                    semop (semFeux, &reserver, 0);
+                    semop (semaphore, &reserver, 1);
                     memoire_partagee[INDICE_ETAT_FEU_NS] = ORANGE;
-                    semop (semFeux, &liberer, 0);
+                    semop (semaphore, &liberer, 1);
                     etatNS = ORANGE;
                     tempsNS = 3;
                     Effacer (COULEUR_AXE_NS);
                     Afficher(COULEUR_AXE_NS, "Orange",GRAS,INVERSE);
                     break;
                 case ORANGE:
-                    semop (semFeux, &reserver, 0);
+                    semop (semaphore, &reserver, 1);
                     memoire_partagee[INDICE_ETAT_FEU_NS] = ROUGE;
-                    semop (semFeux, &liberer, 0);
+                    semop (semaphore, &liberer, 1);
                     etatNS = ROUGE;
                     tempsNS = dureeEO + 7;
                     //7= 2s de rouge + 3s de orange + 2s de rouge en commun
                     //Mise à jour de l'affichage 
                     Effacer(COULEUR_AXE_NS);
-                    Afficher(COULEUR_AXE_NS, "Rouge",GRAS,INVERSE);
+                    Afficher(COULEUR_AXE_NS, "Rouge ",GRAS,INVERSE);
                     break;
                 case ROUGE:
-                    semop (semFeux, &reserver, 0);
+                    semop (semaphore, &reserver, 1);
                     memoire_partagee[INDICE_ETAT_FEU_NS] = VERT;
-                    semop (semFeux, &liberer, 0);
+                    semop (semaphore, &liberer, 1);
                     etatNS = VERT;
                     tempsNS = dureeNS;
                     Effacer(COULEUR_AXE_NS);
@@ -126,27 +128,27 @@ static void moteur(int semFeux)
         {
             switch(etatEO){
                 case VERT:
-                    semop (semFeux, &reserver, 0);
+                    semop (semaphore, &reserver, 1);
                     memoire_partagee[INDICE_ETAT_FEU_EO] = ORANGE;
-                    semop (semFeux, &liberer, 0);
+                    semop (semaphore, &liberer, 1);
                     etatEO = ORANGE;
                     tempsEO = 3;
                     Effacer (COULEUR_AXE_EO);
                     Afficher(COULEUR_AXE_EO, "Orange",GRAS,INVERSE);
                     break;
                 case ORANGE:
-                    semop (semFeux, &reserver, 0);
+                    semop (semaphore, &reserver, 1);
                     memoire_partagee[INDICE_ETAT_FEU_EO] = ROUGE;
-                    semop (semFeux, &liberer, 0);
+                    semop (semaphore, &liberer, 1);
                     etatEO = ROUGE;
                     tempsEO = dureeNS + 7;
                     Effacer(COULEUR_AXE_EO);
-                    Afficher(COULEUR_AXE_EO, "Rouge",GRAS,INVERSE);
+                    Afficher(COULEUR_AXE_EO, "Rouge ",GRAS,INVERSE);
                     break;
                 case ROUGE:
-                    semop (semFeux, &reserver, 0);
-                    memoire_partagee[1] = VERT;
-                    semop (semFeux, &liberer, 0);
+                    semop (semaphore, &reserver, 1);
+                    memoire_partagee[INDICE_ETAT_FEU_EO] = VERT;
+                    semop (semaphore, &liberer, 1);
                     etatEO = VERT;
                     tempsEO = dureeEO;
                     Effacer(COULEUR_AXE_EO);
@@ -158,10 +160,10 @@ static void moteur(int semFeux)
         Afficher(TEMPS_AXE_NS, tempsNS--);
         Afficher(TEMPS_AXE_EO, tempsEO--);
         //Lecture des durées en mémoire
-        semop (semFeux, &reserver, 0);
+        semop (semaphore, &reserver, 1);
         dureeNS = memoire_partagee[INDICE_TEMPS_NS];
         dureeEO = memoire_partagee[INDICE_TEMPS_EO];
-        semop (semFeux, &liberer, 0);
+        semop (semaphore, &liberer, 1);
         //Mise à jour de l'affichage
         Effacer(DUREE_AXE_NS);
         Afficher(DUREE_AXE_NS, dureeNS);
@@ -178,6 +180,6 @@ void Feu(int SharedMemory, int semFeux)
 //
 {
     initialisation(SharedMemory, semFeux);
-    moteur(semFeux);
+    moteur();
 } //----- fin de Nom
 

@@ -1,5 +1,5 @@
 /*************************************************************************
-                           Voie  -  description
+                           Voie  -  Gestion des differentes voies du carrefour
                              -------------------
     début                : 19/03/2014
     copyright            : (C) 2015 par Mohamed HAIDARA
@@ -37,6 +37,11 @@
 // Contrat :
 //
 
+// void Voie(int fileVoitures, int sem, int shmid, TypeVoie typeVoie);
+// Mode d'emploi : Gere l'arrivée des voitures sur le carrefour
+//
+// Contrat : Fournir des indentifiants de semaphores, boite aux lettres et
+// memoire partagées valides avec les bons droits.
 void Voie(int fileVoitures, int sem, int shmid, TypeVoie typeVoie);
 
 

@@ -1,9 +1,9 @@
 /*************************************************************************
                            GestionMenu  -  description
                              -------------------
-    début                : GestionMenu
+    début                : 19/03/2015
     copyright            : (C) 2015 par Mohamed HAIDARA
-    e-mail               : GestionMenu
+    e-mail               : mohamed.haidara@insa-lyon.fr
 *************************************************************************/
 
 //---------- Interface de la tâche <GestionMenu> (fichier GestionMenu.h) -------
@@ -25,12 +25,12 @@
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-// type Nom ( liste de paramètres );
+// void GestionMenu ( pid_t generateur, int fileVoitures, int shmid, int semaphore );
 // Mode d'emploi :
 //
-// Contrat :
-//
-void GestionMenu(pid_t generateur, int fileVoitures, int shmid);
+// Contrat : Fournir des indentifiants de semaphores, boite aux lettres et
+// memoire partagées valides avec les bons droits et le pid du génerateur
+void GestionMenu(pid_t generateur, int fileVoitures, int shmid, int semaphore);
 
 #endif // GestionMenu_H
 
